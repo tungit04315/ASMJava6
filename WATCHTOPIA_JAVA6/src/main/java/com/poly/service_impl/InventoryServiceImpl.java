@@ -22,7 +22,7 @@ public class InventoryServiceImpl implements InventoryService{
 
 	@Override
 	public Inventory findByID(Integer id) {
-		return dao.findById(id).get();
+		return dao.findObject(id);
 	}
 
 	@Override

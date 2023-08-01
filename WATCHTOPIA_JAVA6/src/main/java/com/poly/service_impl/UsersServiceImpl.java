@@ -2,6 +2,7 @@ package com.poly.service_impl;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.poly.service_bean.UsersService;
 @Service
 public class UsersServiceImpl implements UsersService{
 
+	
 	@Autowired
 	UsersDAO dao;
 	
@@ -41,5 +43,7 @@ public class UsersServiceImpl implements UsersService{
 	public void delete(Integer id) {
 		dao.deleteById(id);
 	}
+
+
 
 }
