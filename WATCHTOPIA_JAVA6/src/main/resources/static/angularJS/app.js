@@ -9,16 +9,16 @@ const app = angular.module("shopping-cart", []);
 //     });
 // })
 
-var getAccountApiURL = 'http://localhost:8080/api/account';
-app.run(function($http, $rootScope) {
-    $http.get(getAccountApiURL)
-        .then(function(response) {
-            auth = $scope.account = response.data;
-        })
-        .catch(function(error) {
-            console.error('Error fetching account:', error);
-        });
-});
+// var getAccountApiURL = 'http://localhost:8080/api/account';
+// app.run(function($http, $rootScope) {
+//     $http.get(getAccountApiURL)
+//         .then(function(response) {
+//             auth = $scope.account = response.data;
+//         })
+//         .catch(function(error) {
+//             console.error('Error fetching account:', error);
+//         });
+// });
 
 
 app.controller("shopping-cart-ctrl", function($scope, $http) {
@@ -81,17 +81,30 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
     // QUAN LY DON HANG
     $scope.order = {
 
-        createDate: new Date(),
-        address: "",
+        // entity order
+        orders_id: null,
+        fullname: "tung",
+        email: "tungto753@gmail.com",
+        phone: "0838565542",
+        orders_time: new Date(),
+        orders_address: "khom 6a",
+        voucher: null,
+        status: null,
 
-        get account() {
-            return { username: $auth.user.username }
-        },
+
+
+        // get account() {
+        //     return { username: $auth.user.username }
+        // },
+
+        // get account() {
+        //     return { username: 4 }
+        // },
 
         get orderDetails() {
             return $scope.cart.items.map(item => {
                 return {
-                    product: { id: item.id },
+                    product: { id: item.product_id },
                     price: item.price,
                     quantity: item.qty
                 }

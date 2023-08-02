@@ -18,5 +18,5 @@ public interface UsersService {
 
 	public void delete(Integer id);
 	
-
+	public Users findByObject(String email);
 }

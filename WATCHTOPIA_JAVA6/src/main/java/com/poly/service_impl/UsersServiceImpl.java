@@ -44,6 +44,11 @@ public class UsersServiceImpl implements UsersService{
 		dao.deleteById(id);
 	}
 
+	@Override
+	public Users findByObject(String email) {
+		return dao.findByUsersEmailObject(email);
+	}
+
 
 
 }
