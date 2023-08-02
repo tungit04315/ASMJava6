@@ -17,13 +17,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "detail_orders", 
-uniqueConstraints = {
-		@UniqueConstraint(columnNames = {
-				"product_id","orders_id"
-		})
-})
-
+//@Table(name = "detail_orders", 
+//uniqueConstraints = {
+//		@UniqueConstraint(columnNames = {
+//				"product_id","orders_id"
+//		})
+//})
+@Table(name = "detail_orders")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,10 +33,10 @@ public class OrderDetail implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name = "detailOrder_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long detailOrder_id;
+	Long detailorder_id;
 	Integer quantity;
+	Long price;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")

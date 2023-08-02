@@ -43,7 +43,8 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
         },
         remove(id) {
             // xoa sp trong gio hang (cho 1 sp)
-            var index = this.items.findIndex(item => item.id == id);
+            alert(id)
+            var index = this.items.findIndex(item => item.product_id == id);
             this.items.splice(index, 1);
             this.saveToLocalStorage();
         },
@@ -104,9 +105,11 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
         get orderDetails() {
             return $scope.cart.items.map(item => {
                 return {
-                    product: { id: item.product_id },
-                    price: item.price,
-                    quantity: item.qty
+
+                    product: { product_id: item.product_id },
+                    quantity: item.qty,
+                    price: item.product_price
+
                 }
             });
         },
@@ -117,7 +120,10 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
             $http.post("/rest/orders", order).then(resp => {
                 alert("Đặt hàng thành công!");
                 $scope.cart.clear();
-                location.href = "/order/detail/" + resp.data.id;
+                alert(resp.data.orders_id)
+                alert(location.href = "/order/detail/" + resp.data.orders_id)
+                location.href = "/order/detail/" + resp.data.orders_id;
+
             }).catch(error => {
                 alert("Đặt hàng lỗi!")
                 console.log(error)

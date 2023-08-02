@@ -18,7 +18,7 @@ public class HomeController {
 	@Autowired
 	InventoryService invenService;
 
-	@RequestMapping("/home/index")
+	@RequestMapping({"/","/home/index"})
 	public String GetHome(Model m) {
 		m.addAttribute("items", productService.findAll());
 		return "home/index";

@@ -10,5 +10,5 @@ public interface OrderDetailService {
 	
 	public OrderDetail findByID(Long id);
 	
-	
+	public List<OrderDetail> findAllOrderDetail(Integer OrderID);
 }
