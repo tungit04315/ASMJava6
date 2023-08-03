@@ -8,7 +8,7 @@
 <body>
 	<main>
 		<div class="container_banner">
-			<form class="form_container" action="/accountpost/login"
+			<form class="form_container" action="/account/login"
 				method="post">
 				<div class="logo_container"></div>
 				<div class="title_container">
@@ -62,6 +62,7 @@
 				<button type="submit" class="sign-in_btn">
 					<span>Đăng Nhập</span>
 				</button>
+				<i th:text="${message}" style="color:red"></i>
 				<div class="input_container">
 					<c:if test="${errorEmail == true}">
 						<div class="alert alert-danger" role="alert">Nhập sai Email,
@@ -78,7 +79,7 @@
 					<hr class="line">
 				</div>
 				<%--
-				<button title="Sign In" type="submit" class="sign-in_ggl">
+				<a href="/oauth2/authorization/google" title="Sign In" type="submit" class="sign-in_ggl">
 					<svg height="18" width="18" viewBox="0 0 32 32"
 						xmlns:xlink="http://www.w3.org/1999/xlink"
 						xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +107,7 @@
 						src="https://img.icons8.com/fluency/48/null/google-logo.png"
 						style="width: 28px;" /> Đăng nhập với Google
 					</span>
-				</button>
+				</a>
 				<button type="submit" class="sign-in_apl">
 					<span><img
 						src="https://img.icons8.com/fluency/48/null/facebook-new.png"

@@ -51,7 +51,6 @@ public class Users implements Serializable{
 	
 	private int failed_login_attempts = 0;
 	private boolean blocked = false;
-	private boolean roles = false;
 	
 	
 	@JsonIgnore
@@ -61,4 +60,8 @@ public class Users implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Logs> Logs;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userss")
+	List<UserRole> userRoles;
 }
