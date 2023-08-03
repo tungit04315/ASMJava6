@@ -118,7 +118,7 @@
             <section id="updateProflie" class="updateProflie">
                 <div class="container ">
                     <h3><i class="fa-solid fa-grip-lines-vertical"></i> Cập Nhật Thông Tin Cá Nhân</h3>
-                    <form action="" method="post" class="container-update-proflie">
+                    <form action="/account/changeprofile" method="post" class="container-update-proflie">
                         <div class="row">
                             <div class="col-sm-4">
                                 <img src="/icon/avatarNEW.png" class="img-thumbnail" alt="..." style="width: 70%;padding: 10px; border: none;">
@@ -126,25 +126,32 @@
                             <div class="col-sm-8">
                                 <div class="row">
                                     <div class="col">
+                                        <label for="">Username</label>
+                                        <input type="text" name="username" value="" class="form-control" placeholder="Username">
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="row"style="margin-top: 20px; margin-bottom: 20px;">
+                                    <div class="col">
                                         <label for="">Họ và tên</label>
-                                        <input type="text" name="fullname" value="" class="form-control" placeholder="Tô Quốc Tùng">
+                                        <input type="text" name="fullname" value="" class="form-control" placeholder="Họ và tên">
                                     </div>
                                     <div class="col">
                                         <label for="">Email</label>
-                                        <input type="text" name="email" value="" class="form-control" placeholder="tungto753@gmail.com">
+                                        <input type="text" name="email" value="" class="form-control" placeholder="abc@gmail.com">
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
                                     <div class="col">
                                         <label for="">Số điện thoại</label>
-                                        <input type="text" name="phone" value="" class="form-control" placeholder="tungto753">
+                                        <input type="text" name="phone" value="" class="form-control" placeholder="XXXXXXXXXX">
                                     </div>
                                     <div class="col">
                                         <label for="">Mật khẩu</label>
                                         <input type="text" name="passwords" value="" class="form-control" placeholder="khongcomatkhau">
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-outline-secondary btn-update">Cập nhật</button>
+                                <button type="submit" class="btn btn-outline-secondary btn-update">Cập nhật</button>
                             </div>
                         </div>
                     </form>

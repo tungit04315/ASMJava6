@@ -75,9 +75,10 @@ public class AccountController {
 		}
 		return "account/register";
 	}
-//	@GetMapping("/account/registers")
-//	public String GetRegister(Model m) {
-//		m.addAttribute("successRegister", "true");
-//		return "/account/registers";
-//	}
+	
+	@PostMapping("/account/changeprofile")
+	public String ChangeProfile(Model m, Users u,@Param("username") String username) {
+		userService.update(u);
+		return "/home/profile";
+	}
 }
