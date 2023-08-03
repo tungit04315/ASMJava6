@@ -8,7 +8,7 @@
 <body>
 	<main>
 		<div class="container_banner">
-		<form class="form_container" action="/account/register" method="post">
+		<form class="form_container" action="/account/registers" method="post">
 			<div class="logo_container"></div>
 			<div class="title_container">
 				<p class="title">Đăng Ký</p>
@@ -17,40 +17,38 @@
 			</div>
 			<br>
 			<div class="input_container">
-				<label class="input_label" for="email_field">Họ Và Tên</label> <input
-					placeholder="Your full name" name="fullname" type="text"
-					class="input_field_two" id="email_field">
+				<label class="input_label" for="email_field">Fullname</label> <input
+					placeholder="Fullname" name="fullname"
+					class="input_field_two" id="email_field" required>
+			</div>			
+			<div class="input_container">
+				<label class="input_label" for="email_field">Username</label> <input
+					placeholder="Username" name="username"
+					class="input_field_two" id="email_field" required>
 			</div>
 			<div class="input_container">
 				<label class="input_label" for="email_field">Email</label> <input
 					placeholder="name@mail.com" name="email" type="email"
-					class="input_field_two" id="email_field">
+					class="input_field_two" id="email_field" required>
 			</div>
 			<div class="input_container">
 				<label class="input_label" for="password_field">Mật Khẩu</label> <input
 					placeholder="Password" name="passwords" type="password"
-					class="input_field_two" id="password_field">
+					class="input_field_two" id="password_field" required>
 			</div>
 			<button type="submit" class="sign-in_btn">
 				<span>Đăng Ký</span>
 			</button>
 			<div class="input_container">
-				<c:if test="${succ == true}">
-					<div class="alert alert-success" role="alert">Đăng ký tài khoản thành công!</div>
-				</c:if>
-				<c:if test="${errorEmail == true}">
-					<div class="alert alert-danger" role="alert">Đăng ký tài khoản thất bại! (email đã tồn tại.)</div>
-				</c:if>
-				<c:if test="${errorNull == true}">
-					<div class="alert alert-danger" role="alert">Vui lòng không để trống ô nhập!</div>
-				</c:if>
+				<div th:if="${successRegister} == 'true'" class="alert alert-success" role="alert">Đăng ký tài khoản thành công!</div>
+				<div th:if="${errorUsername} == 'true'" class="alert alert-danger" role="alert">Đăng ký tài khoản thất bại! (Username đã tồn tại)</div>
 			</div>
 			<div class="separator">
 				<hr class="line">
 				<span>Hoặc</span>
 				<hr class="line">
 			</div>
-<%-- 			<button title="Sign In" type="submit" class="sign-in_ggl">
+ 			<a href="" title="Sign In" type="submit" class="sign-in_ggl">
 				<svg height="18" width="18" viewBox="0 0 32 32"
 					xmlns:xlink="http://www.w3.org/1999/xlink"
 					xmlns="http://www.w3.org/2000/svg">
@@ -78,12 +76,12 @@
 					src="https://img.icons8.com/fluency/48/null/google-logo.png"
 					style="width: 28px;" /> Đăng ký với Google
 				</span>
-			</button>
+			</a>
 			<button type="submit" class="sign-in_apl">
 				<span><img
 					src="https://img.icons8.com/fluency/48/null/facebook-new.png"
 					style="width: 28px;" /> Đăng ký với Facebook</span>
-			</button> --%>
+			</button>
 			<p class="note">
 				Bạn đã có tài khoản? <a href="/account/login"
 					style="color: red; text-decoration: none;">Đăng Nhập</a>

@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "user_role", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"users_id","roles_id"})
+		@UniqueConstraint(columnNames = {"username","roles_id"})
 })
 public class UserRole {
 	@Id
@@ -23,7 +23,7 @@ public class UserRole {
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name = "users_id")
+	@JoinColumn(name = "username")
 	private Users userss;
 	
 	@ManyToOne

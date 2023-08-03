@@ -48,12 +48,4 @@ public class SecurityController {
 	public Object getAuthentication(HttpSession session) {
 		return session.getAttribute("authentication");
 	}
-	
-	UsersServiceImpl usersServiceImpl;
-	
-	@RequestMapping("/oauth2/login/success")
-	public String success(OAuth2AuthenticationToken oauth2) {
-		usersServiceImpl.loginFromOAuth2(oauth2);
-		return "forward:/oauth2/login/success";
-	}
 }

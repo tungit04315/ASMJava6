@@ -1,6 +1,7 @@
 package com.poly.service_impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.tomcat.util.net.jsse.PEMFile;
 import org.springframework.security.core.Authentication;
@@ -34,8 +35,13 @@ public class UsersServiceImpl implements UsersService{
 	}
 
 	@Override
-	public Users findById(Integer id) {
-		return dao.findById(id).get();
+	public Users findById(String id) {
+		Users users = dao.findById(id).orElse(null);
+		if(users!=null) {
+			return users;
+		}else {
+			return null;
+		}
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class UsersServiceImpl implements UsersService{
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		dao.deleteById(id);
 	}
 
@@ -58,15 +64,4 @@ public class UsersServiceImpl implements UsersService{
 	public Users findByObject(String email) {
 		return dao.findByUsersEmailObject(email);
 	}
-	
-	@Override
-	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
-		String email = oauth2.getPrincipal().getAttribute("email");
-		String password = Long.toHexString(System.currentTimeMillis());
-		
-		UserDetails user = User.withUsername(email)
-			.password(pe.encode(password)).roles("USER").build();
-		Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(auth);
-	} 
 }

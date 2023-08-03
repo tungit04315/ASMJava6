@@ -41,7 +41,7 @@ public class Logs implements Serializable{/**
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "users_id")
+	@JoinColumn(name = "username")
 	Users user;
 	
 	@Temporal(TemporalType.DATE)

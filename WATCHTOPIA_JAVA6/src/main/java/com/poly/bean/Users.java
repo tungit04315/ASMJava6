@@ -37,8 +37,7 @@ public class Users implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int users_id;
+	private String username;
 	private String fullname;
 	private String passwords;
 	private String email;

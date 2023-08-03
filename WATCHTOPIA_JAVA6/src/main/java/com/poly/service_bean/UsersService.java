@@ -12,15 +12,13 @@ public interface UsersService {
 
 	public List<Users> findAll();
 
-	public Users findById(Integer id);
+	public Users findById(String id);
 
 	public Users create(Users u);
 
 	public Users update(Users u);
 
-	public void delete(Integer id);
+	public void delete(String id);
 	
 	public Users findByObject(String email);
-	
-	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2);
 }
