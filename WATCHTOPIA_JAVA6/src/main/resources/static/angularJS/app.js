@@ -1,13 +1,17 @@
 const app = angular.module("shopping-cart", []);
 
-// app.run(function($http, $rootScope) {
-//     $http.get(`/rest/security/authentication`).then(resp => {
-//         if (resp.data) {
-//             $auth = $rootScope.$auth = resp.data;
-//             $http.defaults.headers.common["Authorization"] = $auth.token;
-//         }
-//     });
-// })
+app.run(function($http, $rootScope) {
+    $http.get(`/rest/security/authentication`).then(resp => {
+        if (resp.data) {
+            $auth = $rootScope.$auth = resp.data;
+            console.log(resp.data)
+            console.log($auth.token)
+            console.log($auth.user.fullname)
+            $http.defaults.headers.common["Authorization"] = $auth.token;
+
+        }
+    });
+})
 
 // var getAccountApiURL = 'http://localhost:8080/api/account';
 // app.run(function($http, $rootScope) {
@@ -21,8 +25,7 @@ const app = angular.module("shopping-cart", []);
 // });
 
 
-app.controller("shopping-cart-ctrl", function($scope, $http) {
-
+app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
     // QUAN LY GIO HANG
     $scope.cart = {
         items: [],
@@ -54,7 +57,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
             // xoa tat ca sp trong gio hang (cho tat ca)
             this.items = []
             this.saveToLocalStorage();
-            swal("Thành Công!", "Đã xóa tất cả sản phẩm!", "success");
         },
         get count() {
             // tinh tong so luong co trong gio hang
@@ -84,26 +86,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
     // QUAN LY DON HANG
     $scope.order = {
-
         // entity order
         orders_id: null,
-        fullname: "tung",
-        email: "tungto753@gmail.com",
-        phone: "0838565542",
+        fullname: "",
+        email: "",
+        phone: "",
         orders_time: new Date(),
-        orders_address: "khom 6a",
+        orders_address: "",
         voucher: null,
         status: null,
-
-
-
-        // get account() {
-        //     return { username: $auth.user.username }
-        // },
-
-        // get account() {
-        //     return { username: 4 }
-        // },
 
         get orderDetails() {
             return $scope.cart.items.map(item => {
@@ -121,14 +112,13 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
             var order = angular.copy(this);
 
             $http.post("/rest/orders", order).then(resp => {
-                alert("Đặt hàng thành công!");
+                swal("Thành Công!", "Thanh Toán Thành Công!", "success");
                 $scope.cart.clear();
-                alert(resp.data.orders_id)
-                alert(location.href = "/order/detail/" + resp.data.orders_id)
+
                 location.href = "/order/detail/" + resp.data.orders_id;
 
             }).catch(error => {
-                alert("Đặt hàng lỗi!")
+                swal("Thất Bại!", "Thanh Toán Thất Bại!", "warring");
                 console.log(error)
             })
         }

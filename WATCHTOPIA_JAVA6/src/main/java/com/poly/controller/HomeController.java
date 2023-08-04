@@ -37,15 +37,17 @@ public class HomeController {
 		return "home/cart";
 	}
 	
-	@RequestMapping("/home/profile")
+	@RequestMapping("/user/profile")
 	public String GetProfile(Model m) {
 		
 		return "home/profile";
 	}
 	
-	@RequestMapping("/home/order")
+	@RequestMapping("/user/order")
 	public String GetOrder(Model m) {
 		
 		return "home/order";
 	}
+	
+	
 }

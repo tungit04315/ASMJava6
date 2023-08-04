@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,9 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -32,15 +31,17 @@ import lombok.Setter;
 @Setter
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "roles"}) })
+@Table(name = "users", uniqueConstraints = 
+{ 
+		@UniqueConstraint(columnNames = { "username"}) 		
+})
 public class Users implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int users_id;
+	private String username;
 	private String fullname;
 	private String passwords;
 	private String email;
@@ -55,15 +56,19 @@ public class Users implements Serializable{
 	private boolean blocked = false;
 //	private boolean roles = false;
 	
-	@ManyToOne
-	@JoinColumn(name = "roles")
-	Roles role;
+//	@ManyToOne
+//	@JoinColumn(name = "roles_id")
+//	Roles role;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "users")
-	List<CartItem> Cart;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "users")
+//	List<CartItem> Cart;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	List<Logs> Logs;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "username", fetch = FetchType.EAGER)
+	List<UserRole> UserRole;
 }

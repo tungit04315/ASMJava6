@@ -41,32 +41,32 @@ public class ShoppingCart implements ShoppingCartService{
 
 	@Override
 	public void add(int id) {
-		Users u = ss.getAttribute("username");
-		Products p = repo.findById(id).get();
-
-		CartItem cartFind = cart.findByObjectCartSQL(p.getProduct_id(), u.getUsers_id());
-		Inventory inven = invenDao.findObject(id);
-		CartItem item = new CartItem();
-		
-		if(cartFind == null) {
-			item.setProduct(p);
-			item.setUsers(u);
-			item.setQuantity(1);
-		}else {
-			if(cartFind.getQuantity() == inven.getQuantity()) {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(cartFind.getQuantity());
-			}else {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(cartFind.getQuantity() + 1);
-			}
-			
-		}		
-		cart.save(item);
+//		Users u = ss.getAttribute("username");
+//		Products p = repo.findById(id).get();
+//
+//		CartItem cartFind = cart.findByObjectCartSQL(p.getProduct_id(), u.getUsers_id());
+//		Inventory inven = invenDao.findObject(id);
+//		CartItem item = new CartItem();
+//		
+//		if(cartFind == null) {
+//			item.setProduct(p);
+//			item.setUsers(u);
+//			item.setQuantity(1);
+//		}else {
+//			if(cartFind.getQuantity() == inven.getQuantity()) {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(cartFind.getQuantity());
+//			}else {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(cartFind.getQuantity() + 1);
+//			}
+//			
+//		}		
+//		cart.save(item);
 	}
 
 	@Override
@@ -89,45 +89,45 @@ public class ShoppingCart implements ShoppingCartService{
 	}
 	
 	public void update(int id, String action) {
-		CartItem item = new CartItem();	
-		Users u = ss.getAttribute("username");
-		Products p = repo.findById(id).get();
-
-		CartItem cartFind = cart.findByObjectCartSQL(p.getProduct_id(), u.getUsers_id());
-		Inventory inven = invenDao.findObject(id);
-		if(cartFind.getQuantity() > inven.getQuantity()) {
-			
-		}
-		if(action.equalsIgnoreCase("cong")) {
-			if(cartFind.getQuantity() == inven.getQuantity()) {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(cartFind.getQuantity());
-			}else {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(cartFind.getQuantity() + 1);
-			}
-			
-		}else 
-			if(action.equalsIgnoreCase("tru")) 
-		{
-			if(cartFind.getQuantity() == 1) {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(1);
-			}else {
-				item.setCart_id(cartFind.getCart_id());
-				item.setProduct(p);
-				item.setUsers(u);
-				item.setQuantity(cartFind.getQuantity() - 1);
-			}
-			
-		}
-		cart.save(item);
+//		CartItem item = new CartItem();	
+//		Users u = ss.getAttribute("username");
+//		Products p = repo.findById(id).get();
+//
+//		CartItem cartFind = cart.findByObjectCartSQL(p.getProduct_id(), u.getUsers_id());
+//		Inventory inven = invenDao.findObject(id);
+//		if(cartFind.getQuantity() > inven.getQuantity()) {
+//			
+//		}
+//		if(action.equalsIgnoreCase("cong")) {
+//			if(cartFind.getQuantity() == inven.getQuantity()) {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(cartFind.getQuantity());
+//			}else {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(cartFind.getQuantity() + 1);
+//			}
+//			
+//		}else 
+//			if(action.equalsIgnoreCase("tru")) 
+//		{
+//			if(cartFind.getQuantity() == 1) {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(1);
+//			}else {
+//				item.setCart_id(cartFind.getCart_id());
+//				item.setProduct(p);
+//				item.setUsers(u);
+//				item.setQuantity(cartFind.getQuantity() - 1);
+//			}
+//			
+//		}
+//		cart.save(item);
 	}
 //tese
 	@Override
