@@ -34,87 +34,16 @@
                 </div>
                 <nav id="navbar" class="nav-menu navbar">
                     <ul>
-                        <li><a href="#about" class="nav-link scrollto active"><i class="fa-solid fa-user text-white"></i> <span>Thông Tin Cá Nhân</span></a></li>
+						<li><a href="/home/index" class="nav-link scrollto"><i class="fa-solid fa-house" style="color: #ffffff;"></i> <span>Trang chủ</span></a></li>
                         <li><a href="#updateProflie" class="nav-link scrollto"><i class="fa-solid fa-pen-to-square text-white"></i> <span>Cập Nhật Thông Tin Cá Nhân</span></a></li>
                         <li><a href="#passwordUpdate" class="nav-link scrollto"><i class="fa-solid fa-passport text-white"></i> <span>Đổi Mật Khẩu</span></a></li>
-                        <li><a href="/security/logoff" class="nav-link scrollto"><i class="fa-solid fa-arrow-right-from-bracket text-white"></i> <span>Đăng Xuất</span></a></li>
+                        <li><a href="/account/logoff" class="nav-link scrollto"><i class="fa-solid fa-arrow-right-from-bracket text-white"></i> <span>Đăng Xuất</span></a></li>
                     </ul>
                 </nav>
             </div>
         </header>
 
         <main id="main">
-
-            <section id="about" class="about">
-
-                <div class="container">
-                    <h3><i class="fa-solid fa-grip-lines-vertical"></i> Thông Tin Cá Nhân</h3>
-                    <div class="card mb-12" style="margin: 10px  0 10px 0;">
-                        <div class="row g-0">
-                            <div class="col-md-2" style="padding: 10px;">
-                                <img src="/icon/avatarNEW.png" class="img-fluid rounded-start" alt="avatarNEW">
-                            </div>
-                            <div class="col-md-10">
-                                <div class="card-body">
-                                    <h5 class="card-title"></h5>
-                                    <p class="card-text">???</p>
-                                    <p class="card-text"><small class="text-body-secondary">???</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-header">
-                                    <i class="fa-solid fa-mobile"></i> Liên Hệ
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><i class="fa-solid fa-phone"></i> ???</li>
-                                    <li class="list-group-item"><i class="fa-solid fa-envelope"></i></li>
-                                    <li class="list-group-item"><i class="fa-solid fa-location-dot"></i> ???</li>
-                                </ul>
-                            </div>
-                            <hr>
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-header">
-                                    <i class="fa-solid fa-heart"></i> Sở Thích
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><i class="fa-solid fa-gamepad"></i> ???</li>
-                                    <li class="list-group-item"><i class="fa-solid fa-table-tennis-paddle-ball"></i> ???</li>
-                                    <li class="list-group-item"><i class="fa-solid fa-book-open"></i> ???</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <form action="" method="post">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="">Họ và tên</label>
-                                        <input type="text" name="fullname" value="" class="form-control" placeholder="Tô Quốc Tùng">
-                                    </div>
-                                    <div class="col">
-                                        <label for="">Email</label>
-                                        <input type="text" name="email" value="" class="form-control" placeholder="tungto753@gmail.com">
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-top: 20px;">
-                                    <div class="col">
-                                        <label for="">Số điện thoại</label>
-                                        <input type="text" name="phone" value="" class="form-control" placeholder="tungto753">
-                                    </div>
-                                    <div class="col">
-                                        <label for="">Mật khẩu</label>
-                                        <input type="text" name="passwords" value="" class="form-control" placeholder="khongcomatkhau">
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
             <section id="updateProflie" class="updateProflie">
                 <div class="container ">
                     <h3><i class="fa-solid fa-grip-lines-vertical"></i> Cập Nhật Thông Tin Cá Nhân</h3>
@@ -161,7 +90,7 @@
             <section id="passwordUpdate">
                 <div class="container ">
                     <h3><i class="fa-solid fa-grip-lines-vertical"></i> Đổi Mật Khẩu</h3>
-                    <form action="" method="get" class="container-update-proflie" style="margin-bottom: 120px;">
+                    <form action="/account/changePassProfile" method="post" class="container-update-proflie" style="margin-bottom: 120px;">
                         <strong>Đổi Mật Khẩu</strong><br>
                         <p>Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu với bất kỳ ai.</p>
                         <hr>
@@ -186,13 +115,17 @@
                         <div class="row mb-3">
                             <label for="inputPassword3" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-10">
-                                <button type="button" class="btn btn-outline-secondary">Xác nhận</button>
+                                <button type="submit" class="btn btn-outline-secondary">Xác nhận</button>
                             </div>
                         </div>
                         <hr>
                         <a href="" class="text-center" style="text-decoration: none; color:rgb(103, 103, 103);">
                             Bạn quên mật khẩu?
                         </a>
+                        <div>
+				<div th:if="${successPass} == true" class="alert alert-success" role="alert">Cập nhật thành công!</div>
+				<div th:if="${errorPass} == true" class="alert alert-danger" role="alert">Kiểm tra lại mật khẩu!</div>
+                        </div>
                     </form>
                 </div>
                 <hr style="color:orange; height:5px; background-color: orange;">
