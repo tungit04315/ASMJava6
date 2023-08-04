@@ -1,11 +1,17 @@
 package com.poly.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.service_bean.OrderService;
+
 @Controller
 public class AdminController {
+	
+	@Autowired
+	OrderService orderService;
 
 	@RequestMapping("/admin/index")
 	public String getHome(Model m) {
@@ -44,6 +50,8 @@ public class AdminController {
 	
 	@RequestMapping("/admin/order")
 	public String getOrder(Model m) {
+		m.addAttribute("listOrder", orderService.findAllOrder());
+		
 		return "manager/order";
 	}
 	

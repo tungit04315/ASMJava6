@@ -17,4 +17,7 @@ public interface UsersDAO extends JpaRepository<Users, Integer>{
 			+ "from users u inner join  Logs l  on l.users_id = u.users_id "
 			+ "group by u.users_id, u.fullname, u.passwords, u.email, u.phone , u.active, u.blocked, u.failed_login_attempts, u.last_login, u.roles" , nativeQuery = true)
 	List<Users> findByKeywordsBySQL();
+	
+	@Query("SELECT DISTINCT ar.account FROM Authority ar WHERE ar.role.id IN ('DIRE', 'STAF')")
+	List<Users> getAdministrators();
 }

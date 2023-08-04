@@ -40,18 +40,21 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
                     this.saveToLocalStorage();
                 })
             }
+            swal("Thành Công!", "Đã thêm vào giỏ hàng!", "success");
         },
         remove(id) {
             // xoa sp trong gio hang (cho 1 sp)
-            alert(id)
+            // alert(id)
             var index = this.items.findIndex(item => item.product_id == id);
             this.items.splice(index, 1);
             this.saveToLocalStorage();
+            swal("Thành Công!", "Xóa sản phẩm thành công!", "success");
         },
         clear() {
             // xoa tat ca sp trong gio hang (cho tat ca)
             this.items = []
             this.saveToLocalStorage();
+            swal("Thành Công!", "Đã xóa tất cả sản phẩm!", "success");
         },
         get count() {
             // tinh tong so luong co trong gio hang

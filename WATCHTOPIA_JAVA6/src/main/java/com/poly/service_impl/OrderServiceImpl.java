@@ -48,9 +48,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> findAll() {
+	public List<Order> findAllOrder() {
 		// TODO Auto-generated method stub
-		return null;
+//		return dao.findAllOrder();
+		return dao.findAll();
 	}
 
 	@Override

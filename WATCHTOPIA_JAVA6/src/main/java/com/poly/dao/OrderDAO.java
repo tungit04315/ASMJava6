@@ -19,4 +19,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer>{
 	
 	@Query("SELECT o FROM Order o WHERE o.email=?1")
 	List<Order> findByUsername(String email);
+	
+	@Query("SELECT o FROM Order o")
+	List<Order> findAllOrder();
 }
