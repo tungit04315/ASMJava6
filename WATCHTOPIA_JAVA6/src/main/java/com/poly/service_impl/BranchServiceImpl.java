@@ -16,7 +16,7 @@ public class BranchServiceImpl implements BranchService{
 	BranchDAO dao;
 
 	@Override
-	public List<Branch> findaAll() {
+	public List<Branch> findAll() {
 		
 		return dao.findAll();
 	}
