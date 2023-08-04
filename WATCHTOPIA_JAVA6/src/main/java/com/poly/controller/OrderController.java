@@ -1,6 +1,7 @@
 package com.poly.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.bean.Users;
 import com.poly.service_bean.OrderDetailService;
 import com.poly.service_bean.OrderService;
 
@@ -28,9 +30,9 @@ public class OrderController {
 	}
 
 	@RequestMapping("/order/list")
-	public String getList(Model m, HttpServletRequest request) {
-//		String username = request.getRemoteUser();
-		m.addAttribute("orders", orderService.findByUsername("tungto753@gmail.com"));
+	public String getList(Model m, HttpSession ss) {
+		Users u = (Users) ss.getAttribute("user");
+		m.addAttribute("orders", orderService.findByUsername(u.getEmail()));
 		return "home/order";
 	}
 

@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
 				
 				ss.setAttribute("authentication", authentication);
+				ss.setAttribute("users", user);
 
 				return User.withUsername(username).password(password).roles(roles).build();
 			} catch (NoSuchElementException e) {
