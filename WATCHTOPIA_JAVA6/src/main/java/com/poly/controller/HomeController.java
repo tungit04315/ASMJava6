@@ -1,16 +1,22 @@
 package com.poly.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.poly.bean.Users;
 import com.poly.service_bean.InventoryService;
 import com.poly.service_bean.ProductService;
+import com.poly.service_bean.UsersService;
 
 @Controller
 public class HomeController {
+	@Autowired
+	UsersService usersService;
 	
 	@Autowired
 	ProductService productService;
@@ -18,7 +24,10 @@ public class HomeController {
 	@Autowired
 	InventoryService invenService;
 
-	@RequestMapping("/home/index")
+	@Autowired
+	HttpSession session;
+	
+	@RequestMapping({"/","/home/index"})
 	public String GetHome(Model m) {
 		m.addAttribute("items", productService.findAll());
 		return "home/index";
@@ -37,15 +46,18 @@ public class HomeController {
 		return "home/cart";
 	}
 	
-	@RequestMapping("/home/profile")
+	@RequestMapping("/user/profile")
 	public String GetProfile(Model m) {
-		
+		Users u =  (Users) session.getAttribute("users");
+		m.addAttribute("profile", usersService.findById(u.getUsername()));
 		return "home/profile";
 	}
 	
-	@RequestMapping("/home/order")
+	@RequestMapping("/user/order")
 	public String GetOrder(Model m) {
 		
 		return "home/order";
 	}
+	
+	
 }

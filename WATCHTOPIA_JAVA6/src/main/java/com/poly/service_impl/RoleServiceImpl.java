@@ -3,7 +3,7 @@ package com.poly.service_impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.poly.bean.Role;
+import com.poly.bean.Roles;
 import com.poly.dao.RoleDAO;
 import com.poly.service_bean.RoleService;
 
@@ -13,7 +13,7 @@ public class RoleServiceImpl implements RoleService{
 	RoleDAO dao;
 	
 	@Override
-	public Role findbyId(String id) {
+	public Roles findbyId(String id) {
 		return dao.findById(id).get();
 	}
 

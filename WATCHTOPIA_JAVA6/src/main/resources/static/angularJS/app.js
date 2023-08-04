@@ -1,13 +1,17 @@
 const app = angular.module("shopping-cart", []);
 
-// app.run(function($http, $rootScope) {
-//     $http.get(`/rest/security/authentication`).then(resp => {
-//         if (resp.data) {
-//             $auth = $rootScope.$auth = resp.data;
-//             $http.defaults.headers.common["Authorization"] = $auth.token;
-//         }
-//     });
-// })
+app.run(function($http, $rootScope) {
+    $http.get(`/rest/security/authentication`).then(resp => {
+        if (resp.data) {
+            $auth = $rootScope.$auth = resp.data;
+            console.log(resp.data)
+            console.log($auth.token)
+            console.log($auth.user.fullname)
+            $http.defaults.headers.common["Authorization"] = $auth.token;
+
+        }
+    });
+})
 
 // var getAccountApiURL = 'http://localhost:8080/api/account';
 // app.run(function($http, $rootScope) {
@@ -21,8 +25,7 @@ const app = angular.module("shopping-cart", []);
 // });
 
 
-app.controller("shopping-cart-ctrl", function($scope, $http) {
-
+app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
     // QUAN LY GIO HANG
     $scope.cart = {
         items: [],
@@ -40,12 +43,15 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
                     this.saveToLocalStorage();
                 })
             }
+            swal("Thành Công!", "Đã thêm vào giỏ hàng!", "success");
         },
         remove(id) {
             // xoa sp trong gio hang (cho 1 sp)
-            var index = this.items.findIndex(item => item.id == id);
+            // alert(id)
+            var index = this.items.findIndex(item => item.product_id == id);
             this.items.splice(index, 1);
             this.saveToLocalStorage();
+            swal("Thành Công!", "Xóa sản phẩm thành công!", "success");
         },
         clear() {
             // xoa tat ca sp trong gio hang (cho tat ca)
@@ -80,33 +86,24 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
 
     // QUAN LY DON HANG
     $scope.order = {
-
         // entity order
         orders_id: null,
-        fullname: "tung",
-        email: "tungto753@gmail.com",
-        phone: "0838565542",
+        fullname: "",
+        email: "",
+        phone: "",
         orders_time: new Date(),
-        orders_address: "khom 6a",
+        orders_address: "",
         voucher: null,
         status: null,
-
-
-
-        // get account() {
-        //     return { username: $auth.user.username }
-        // },
-
-        // get account() {
-        //     return { username: 4 }
-        // },
 
         get orderDetails() {
             return $scope.cart.items.map(item => {
                 return {
-                    product: { id: item.product_id },
-                    price: item.price,
-                    quantity: item.qty
+
+                    product: { product_id: item.product_id },
+                    quantity: item.qty,
+                    price: item.product_price
+
                 }
             });
         },
@@ -115,11 +112,13 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
             var order = angular.copy(this);
 
             $http.post("/rest/orders", order).then(resp => {
-                alert("Đặt hàng thành công!");
+                swal("Thành Công!", "Thanh Toán Thành Công!", "success");
                 $scope.cart.clear();
-                location.href = "/order/detail/" + resp.data.id;
+
+                location.href = "/order/detail/" + resp.data.orders_id;
+
             }).catch(error => {
-                alert("Đặt hàng lỗi!")
+                swal("Thất Bại!", "Thanh Toán Thất Bại!", "warring");
                 console.log(error)
             })
         }
