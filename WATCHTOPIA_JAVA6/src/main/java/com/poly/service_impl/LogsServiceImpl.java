@@ -16,8 +16,14 @@ public class LogsServiceImpl implements LogsService{
 	LogsDAO dao;
 	
 	@Override
-	public List<Logs> findaAll() {
+	public List<Logs> findAll() {
 		return dao.findAll();
+	}
+
+	@Override
+	public void delete(Integer id) {
+		dao.deleteById(id);
+		
 	}
 
 }

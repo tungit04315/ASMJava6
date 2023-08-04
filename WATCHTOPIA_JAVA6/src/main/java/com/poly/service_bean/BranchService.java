@@ -5,5 +5,5 @@ import java.util.List;
 import com.poly.bean.Branch;
 
 public interface BranchService {
-	public List<Branch> findaAll();
+	public List<Branch> findAll();
 }

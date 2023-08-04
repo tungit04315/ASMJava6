@@ -49,5 +49,11 @@ public class ProductServiceImpl implements ProductService{
 	public void delete(Integer id) {
 		dao.deleteById(id);
 	}
+	
+	@Override
+	public Products findTop1ProductIdBySQL() {
+		
+		return dao.findTop1ProductIdBySQL();
+	}
 
 }
