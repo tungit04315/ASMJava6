@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poly.service.ParamService;
 import com.poly.service.SessionService;
 import com.poly.service_bean.UsersService;
 
@@ -51,6 +52,9 @@ public class AccountController {
 	@Autowired
 	SessionService ss;
 
+	@Autowired
+	ParamService param;
+	
 	@RequestMapping("/account/login/form")
 	public String getLogin(Model m) {
 		return "account/login";
@@ -146,6 +150,42 @@ public class AccountController {
 		userService.update(u);
 		Users user =  (Users) ss.getAttribute("users");
 		m.addAttribute("profile", userService.findById(user.getUsername()));
+		return "home/profile";
+	}
+	
+	@PostMapping("/account/changePassProfile")
+	public String ChangePassProfile(Model m, Users u,@Param("passwords") String passwords) {
+		Users user =  (Users) ss.getAttribute("users");
+		
+		String passwordsnew = param.getString("passwordsNew", "");
+		String passwordsnew2 = param.getString("passwordsNew2", "");
+		
+		if(!passwords.equalsIgnoreCase(user.getPasswords())) {
+			m.addAttribute("errorPass","Kiểm tra lại mật khẩu");
+		}
+		if(!passwordsnew.equalsIgnoreCase(passwordsnew2)) {
+			m.addAttribute("errorPass","Kiểm tra lại mật khẩu");
+		}
+		else {
+			u.setUsername(user.getUsername());
+			u.setFullname(user.getFullname());
+			u.setPasswords(user.getPasswords());
+			u.setEmail(user.getEmail());
+			u.setPhone(user.getPhone());
+			u.setActive(user.isActive());
+			u.setCreatedate(user.getCreatedate());
+			u.setFailed_login_attempts(user.getFailed_login_attempts());
+			u.setBlocked(user.isBlocked());
+			u.setLogs(user.getLogs());
+			u.setUserRole(user.getUserRole());
+			
+			u.setPasswords(passwordsnew);
+			userService.update(u);
+			Users user2 =  (Users) ss.getAttribute("users");
+			
+			m.addAttribute("profile", userService.findById(user2.getUsername()));
+			m.addAttribute("successPass",true);
+		}
 		return "home/profile";
 	}
 	@CrossOrigin("*")
