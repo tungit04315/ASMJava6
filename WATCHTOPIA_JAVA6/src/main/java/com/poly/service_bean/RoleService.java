@@ -1,7 +1,7 @@
 package com.poly.service_bean;
 
-import com.poly.bean.Role;
+import com.poly.bean.Roles;
 
 public interface RoleService {
-	public Role findbyId(String id);
+	public Roles findbyId(String id);
 }

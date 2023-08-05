@@ -27,13 +27,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name = "orders")
-@Table(name = "orders", 
-uniqueConstraints = {
-		@UniqueConstraint(columnNames = {
-				"voucher","status"
-		})
-})
+@Table(name = "orders")
+//@Table(name = "orders", 
+//uniqueConstraints = {
+//		@UniqueConstraint(columnNames = {
+//				"voucher","status"
+//		})
+//})
 public class Order implements Serializable{/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class Order implements Serializable{/**
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int orders_id;
+	private Integer orders_id;
 	private String fullname;
 	private String email;
 	private String phone;

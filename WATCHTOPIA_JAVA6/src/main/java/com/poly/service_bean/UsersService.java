@@ -2,9 +2,6 @@ package com.poly.service_bean;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-
 import com.poly.bean.Users;
 
 
@@ -21,4 +18,8 @@ public interface UsersService {
 	public void delete(String id);
 	
 	public Users findByObject(String email);
+	
+	public List<String> getRolesByUsername(String username);
+	
+	public Optional<Users> getAccount(String username);
 }

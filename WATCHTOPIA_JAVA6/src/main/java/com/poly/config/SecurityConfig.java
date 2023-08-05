@@ -19,31 +19,30 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.security.core.userdetails.User;
 
 import com.poly.bean.UserRole;
 import com.poly.bean.Users;
+import com.poly.service.SessionService;
 import com.poly.service_bean.UsersService;
-
 
 
 @Configuration
 @EnableWebSecurity
-@EnableTransactionManagement
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	BCryptPasswordEncoder pe;
 
 	@Autowired
-	UsersService userService;
+	UsersService accountService;
 
 	@Autowired
+
 	HttpSession session;
-	
+
 	// Cơ chế mã hóa mật khẩu
 	@Bean
 	public BCryptPasswordEncoder getPasswordEncoder() {
@@ -53,25 +52,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Cung cấp nguồn dữ liệu đăng nhập
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(email -> {
+		auth.userDetailsService(username -> {
 			try {
-				email ="admin@gmail.com";
-				Users user = userService.findByObject(email);
+				Users user = accountService.findById(username);
 				String password = pe.encode(user.getPasswords());
-				//String[] roles = user.getUserRoles().stream().map(er -> er.getRole().getRoles_id()).collect(Collectors.toList()).toArray(new String[0]);
-				
-//				boolean roles = user.isRoles();
-						
+				String[] roles = user.getUserRole().stream().map(er -> er.getRoleid().getRoles_id())
+						.collect(Collectors.toList()).toArray(new String[0]);
 				Map<String, Object> authentication = new HashMap<>();
+				
 				authentication.put("user", user);
-				byte[] token = (email + ":" + user.getPasswords() + ":" + user.getUserRoles()).getBytes();
+				byte[] token = (username + ":" + user.getPasswords()).getBytes();
+				
 				authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
 				session.setAttribute("authentication", authentication);
-//				return User.withUsername(email).password(password).roles(roles).build();
-				return User.withUsername(email).password(password).build();
-//				return User.withUsername(username).password(password).roles(roles).build();
+				session.setAttribute("users", user);
+
+				return User.withUsername(username).password(password).roles(roles).build();
 			} catch (NoSuchElementException e) {
-				throw new UsernameNotFoundException(email + " not found!");
+				throw new UsernameNotFoundException(username + " not found!");
 			}
 		});
 	}
@@ -83,9 +81,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		
 		http.authorizeRequests()
-		.antMatchers("/home/profile","/home/order").authenticated()
-		.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE")
-		.antMatchers("/rest/authorities").hasRole("DIRE")
+		.antMatchers("/order/**","/user/**").authenticated()
+		.antMatchers("/admin/**").hasAnyRole("ADMIN")
+		.antMatchers("/rest/authorities").hasRole("USER")
 		.anyRequest().permitAll();
 		
 		http.formLogin().loginPage("/account/login")
@@ -97,10 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.exceptionHandling().accessDeniedPage("/account/unauthoried");
 		
-		//Đăng xuất
-		http.logout()
-			.logoutUrl("/security/logoff")
-			.logoutSuccessUrl("/security/logoff/success");
+		http.logout().logoutUrl("/account/logoff").logoutSuccessUrl("/account/logoff/success");
 	}
 
 

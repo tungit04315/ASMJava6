@@ -29,7 +29,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="h5">Sản Phẩm</th>
+                                            <th scope="col">Sản Phẩm</th>
                                             <th scope="col">Đơn Giá</th>
                                             <th scope="col">Số Lượng</th>
                                             <th scope="col">Thành Tiền</th>
@@ -68,7 +68,7 @@
                                             <td class="align-middle">
                                                 <p class="mb-0" style="font-weight: 500;">{{item.qty*item.product_price | number : 3}} VNĐ</p>
                                             </td>
-                                            <td class="align-middle"><button class="btn btn-danger" ng-click="cart.clear()">Xóa</button></td>
+                                            <td class="align-middle"><button class="btn btn-danger" ng-click="cart.remove(item.product_id)">Xóa</button></td>
                                         </tr>
                                         <!-- </c:forEach> -->
                                     </tbody>
@@ -83,43 +83,43 @@
                                                 <div class="col-12 col-xl-12">
 
 
-                                                    <div class="form-outline mb-4 mb-xl-5">
-                                                        <label class="form-label" for="typeExp">Tên Người Nhận
+                                                    <div class="form-outline mb-4 mb-xl-5" hidden>
+                                                        <label class="form-label" for="typeExp">Order ID
 														</label>
-                                                        <input type="text" id="typeExp exp" ng-model="order.orders_id" class="form-control form-control-lg" placeholder="Tên người nhận" value="" />
+                                                        <input type="text" id="typeExp exp" ng-model="order.orders_id" class="form-control form-control-lg" placeholder="Tên người nhận" value="" disabled/>
                                                     </div>
-                                                    <div class="form-outline mb-4 mb-xl-5">
-                                                        <label class="form-label" for="typeExp">Tên Người Nhận
+                                                    <div class="form-outline mb-4 mb-xl-5" hidden>
+                                                        <label class="form-label" for="typeExp">Date
 														</label>
                                                         <input type="text" id="typeExp exp" class="form-control form-control-lg" placeholder="Tên người nhận" value="{{order.orders_time | date : 'dd-MM-yyyy'}}" />
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeExp">Tên Người Nhận
 														</label>
-                                                        <input type="text" id="typeExp exp" ng-model="order.fullname" class="form-control form-control-lg" placeholder="Tên người nhận" /> {{order.fullname}}
+                                                        <input type="text" id="typeExp exp" ng-model="order.fullname" class="form-control form-control-lg" placeholder="Tên người nhận" />
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5">
-                                                        <label class="form-label" for="typeExp">Tên Người Nhận
+                                                        <label class="form-label" for="typeExp">Email
 														</label>
-                                                        <input type="text" id="typeExp exp" ng-model="order.email" class="form-control form-control-lg" placeholder="Tên người nhận" /> {{order.email}}
+                                                        <input type="email" id="typeExp exp" ng-model="order.email" class="form-control form-control-lg" placeholder="Email" />
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeExp">Số Điện Thoại
-														 </label> <input type="text" id="typeExp" ng-model="order.phone" class="form-control form-control-lg" placeholder="Số điện thoại" /> {{order.phone}}
+														 </label> <input type="text" id="typeExp" ng-model="order.phone" class="form-control form-control-lg" placeholder="Số điện thoại" />
                                                     </div>
 
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeName">Địa chỉ</label>
-                                                        <textarea rows="" cols="" id="typeName" ng-model="order.orders_address" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea> {{order.orders_address}}
+                                                        <textarea rows="" cols="" id="typeName" ng-model="order.orders_address" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
                                                     </div>
-                                                    <div class="form-outline mb-4 mb-xl-5">
+                                                    <div class="form-outline mb-4 mb-xl-5" hidden>
                                                         <label class="form-label" for="typeName">Địa chỉ</label>
-                                                        <textarea rows="" cols="" id="typeName" ng-model="order.voucher" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea> {{order.orders_address}}
+                                                        <textarea rows="" cols="" id="typeName" ng-model="order.voucher" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
                                                     </div>
 
-                                                    <div class="form-outline mb-4 mb-xl-5">
+                                                    <div class="form-outline mb-4 mb-xl-5" hidden>
                                                         <label class="form-label" for="typeName">Địa chỉ</label>
-                                                        <textarea rows="" cols="" id="typeName" ng-model="order.status" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea> {{order.orders_address}}
+                                                        <textarea rows="" cols="" id="typeName" ng-model="order.status" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
                                                     </div>
 
                                                 </div>

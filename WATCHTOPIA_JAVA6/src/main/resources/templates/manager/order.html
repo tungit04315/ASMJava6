@@ -26,27 +26,30 @@
                     <table class="table table-dark table-striped table-hover">
                         <thead>
                             <tr>
+                                <th scope="col">STT</th>
                                 <th scope="col">Mã</th>
-                                <th scope="col">Tên Sản Phẩm</th>
-                                <th scope="col">Giá</th>
+
                                 <th scope="col">Người Đặt Hàng</th>
                                 <th scope="col">Thời Gian</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Đồng Hồ LC Cao Cấp</td>
-                                <td>1 000 000</td>
-                                <td>Đồng hồ nam Thông minh </td>
-                                <td>11/07/2023 03:15</td>
-                                <td><a href="#">Xác nhận</a></td>
+
+                            <tr th:each="order, state: ${listOrder}">
+                                <th class="col">[[${state.index}]]</th>
+                                <td class="col">[[${order.orders_id}]]</td>
+
+                                <td class="col">[[${order.fullname}]]</td>
+                                <td class="col">[[${order.orders_time}]]</td>
+                                <td class="col">
+
+                                </td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div class="card">
+                    <!-- <div class="card">
                         <div class="card-body pt-3">
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 <li class="nav-item">
@@ -135,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

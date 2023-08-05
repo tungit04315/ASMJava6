@@ -7,7 +7,7 @@ import com.poly.bean.Order;
 
 public interface OrderService {
 
-	public List<Order> findAll();
+	public List<Order> findAllOrder();
 	
 	public Order findByID(Integer id);
 	

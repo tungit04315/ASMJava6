@@ -31,7 +31,6 @@ public class CartItem implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cart_id;
-	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "username")
@@ -45,9 +44,9 @@ public class CartItem implements Serializable{
 	private int quantity = 1;
 
 	public CartItem(CartItem item) {
-		this.cart_id = item.getCart_id();
-		this.users = item.getUsers();
-		this.product = item.getProduct();
-		this.quantity = 1;
+//		this.cart_id = item.getCart_id();
+//		this.users = item.getUsers();
+//		this.product = item.getProduct();
+//		this.quantity = 1;
 	}
 }
