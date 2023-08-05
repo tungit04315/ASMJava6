@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/rest/authorities").hasRole("DIRE")
 		.anyRequest().permitAll();
 		
-		http.formLogin().loginPage("/account/login/form")
+		http.formLogin().loginPage("/account/login")
 		.loginProcessingUrl("/account/login")
 		.defaultSuccessUrl("/account/login/success", false)
 		.failureUrl("/account/login/error");
