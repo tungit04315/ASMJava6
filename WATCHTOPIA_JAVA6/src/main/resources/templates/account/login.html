@@ -31,7 +31,7 @@
 
                 </div>
                 <div class="input_container">
-                    <label class="input_label" for="password_field">Mật Khẩu</label>
+                    <label class="input_label" for="password_field" >Mật Khẩu</label>
                     <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg" class="icon">
                 <path stroke-linecap="round" stroke-width="1.5"
 							stroke="#141B34"
@@ -45,7 +45,7 @@
                     <input placeholder="Password" title="Inpit title" name="password" type="password" class="input_field" id="password_field">
                 </div>
                 <div class="showpassw">
-                    <input type="checkbox" onclick="showpass3()"> Show Password
+                    <input type="checkbox"> Show Password
                 </div>
                 <!-- <b><i>${param.error}</i></b> -->
                 <div class="input_container form-check">
@@ -55,7 +55,7 @@
                 <button type="submit" class="sign-in_btn">
 					<span>Đăng Nhập</span>
 				</button>
-				<div th:if="${errorPass} == true" class="alert alert-danger" role="alert">Kiểm tra thông tin đăng nhập!</div>
+				<div th:if="${errorlogin} == true" class="alert alert-danger" role="alert">Kiểm tra thông tin đăng nhập!</div>
 <!-- 				<div class="input_container">
 					<c:if test="${errorEmail == true}">
 						<div class="alert alert-danger" role="alert">Nhập sai Email,
@@ -104,10 +104,9 @@
                 <p class="note">
                     Bạn mới sử dụng? <a href="/account/register/form" style="color: red; text-decoration: none;">Đăng Ký</a>
                 </p>
-                <a href="/account/forgetPassword" style="color: red; text-decoration: none;">Quên mật khẩu?</a>
+                <a href="/account/forget" style="color: red; text-decoration: none;">Quên mật khẩu?</a>
             </form>
         </div>
     </main>
 </body>
-
 </html>

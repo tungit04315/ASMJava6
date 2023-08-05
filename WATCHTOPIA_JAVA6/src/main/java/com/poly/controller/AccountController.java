@@ -88,7 +88,7 @@ public class AccountController {
 	
 	@RequestMapping("/account/login/error")
 	public String loginError(Model model) {
-//		model.addAttribute("message", "Sai thông tin đăng nhập!");
+		model.addAttribute("errorlogin", true);
 		return "account/login";
 	}
 	

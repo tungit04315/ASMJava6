@@ -12,8 +12,8 @@
             <div class="row no-gutters" style="height: 15px;">
                 <div class="col-12 col-sm-6 col-md-8" style="margin-top: -20px;">
                     <ul class="nav nav-top">
-                        <li class="nav-item nav_item"><a class="nav-link nav_link active" href="/account/login/form" style="color: rgb(0, 0, 0);">Đăng nhập</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/account/register/form" style="color: rgb(0, 0, 0);">Đăng ký</a></li>
+                        <li sec:authorize="isAnonymous()" class="nav-item nav_item"><a class="nav-link nav_link active" href="/account/login/form" style="color: rgb(0, 0, 0);">Đăng nhập</a></li>
+                        <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" href="/account/register/form" style="color: rgb(0, 0, 0);">Đăng ký</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-4" style="margin-top: -20px;">
@@ -60,7 +60,7 @@
                                 <a href="/user/profile">Trang cá nhân</a>
                                 <a href="/order/list">Đơn mua</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="/account/logoff">Đăng xuất</a>
+                                <a sec:authorize="isAuthenticated()" href="/account/logoff">Đăng xuất</a>
                             </div>
                         </div>
                         <a th:href="@{/home/cart}" class="shopping"> <i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;"></i> <span class="quantity">{{cart.count}}</span>
