@@ -42,15 +42,14 @@ public class HomeController {
 	
 	@RequestMapping("/home/cart")
 	public String GetCart(Model m, HttpSession ss) {
-		Users u = (Users) ss.getAttribute("users");
-		m.addAttribute("u", usersService.findById(u.getUsername()));
+		
 		return "home/cart";
 	}
 	
 	@RequestMapping("/user/profile")
 	public String GetProfile(Model m) {
-		Users u =  (Users) session.getAttribute("users");
-		m.addAttribute("profile", usersService.findById(u.getUsername()));
+		Users u = (Users) session.getAttribute("users");
+		m.addAttribute("u", usersService.findById(u.getUsername()));
 		return "home/profile";
 	}
 	

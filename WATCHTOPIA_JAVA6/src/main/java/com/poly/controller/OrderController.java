@@ -31,8 +31,8 @@ public class OrderController {
 
 	@RequestMapping("/order/list")
 	public String getList(Model m, HttpSession ss) {
-		Users u = (Users) ss.getAttribute("user");
-		m.addAttribute("orders", orderService.findByUsername(u.getEmail()));
+		Users u = (Users) ss.getAttribute("users");
+		m.addAttribute("orders", orderService.findByUsername("thien@gmail.com"));
 		return "home/order";
 	}
 

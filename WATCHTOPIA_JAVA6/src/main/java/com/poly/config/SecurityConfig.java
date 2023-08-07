@@ -40,7 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	UsersService accountService;
 
 	@Autowired
-
 	HttpSession session;
 
 	// Cơ chế mã hóa mật khẩu
