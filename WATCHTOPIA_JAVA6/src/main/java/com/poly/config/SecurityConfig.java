@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				throw new UsernameNotFoundException(username + " not found!");
 			}
 		});
-	}
+	}//new
 
 	// Phân quyền sử dụng
 	@Override
