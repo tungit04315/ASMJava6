@@ -55,7 +55,7 @@
 							</ul>
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade show active pt-3" id="addProduct">
-									<form th:object="${abc}" action="/admin/inventory/update" method="post">
+									<form th:object="${rqItem}" action="/admin/inventory/update" method="post">
 
 									
 										<div class="row mb-3">
@@ -86,6 +86,8 @@
 													class="btn btn-primary">Cập nhật</button>
 											</div>
 										</div>
+										<hr>
+										<h5>[[${message}]]</h5>
 									</form>
 								</div>
 							</div>

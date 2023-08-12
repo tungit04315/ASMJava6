@@ -50,7 +50,7 @@ public class InventoryServiceImpl implements InventoryService{
 	@Override
 	public void save(Inventory inv) {
 		// TODO Auto-generated method stub
-		
+		dao.save(inv);
 	}
 
 }

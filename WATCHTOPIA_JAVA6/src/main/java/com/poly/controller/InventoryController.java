@@ -30,7 +30,8 @@ public class InventoryController {
 	@RequestMapping("/admin/inventory")
 	public String inventory(Model m) {
 		list	= ivenDAO.findAll();
-
+		Inventory rqItem = new Inventory();
+		m.addAttribute("rqItem", rqItem);
 		m.addAttribute("listInventory", list);
 		
 		return "manager/inventory";
@@ -45,7 +46,7 @@ public class InventoryController {
 		inven =  ivenDAO.findInvById(idV);
 	
 		sService.setAttribute("SessionInventory", inven);
-		m.addAttribute("abc", inven);
+		m.addAttribute("rqItem", inven);
 		
 		m.addAttribute("listInventory", list);
 		System.out.println("haha");
@@ -60,9 +61,11 @@ public class InventoryController {
 			itemInven.setId(inventory.getId());
 			itemInven.setProduct(inventory.getProduct());
 			itemInven.setQuantity(qty);
-			ivenDAO.save(itemInven);
-		
+			
+			ivenDAO.update(itemInven);
+			m.addAttribute("message", "Cập nhật thành công");
 			list	= ivenDAO.findAll();
+			
 			
 			m.addAttribute("rqItem", itemInven);
 			m.addAttribute("listInventory", list);
