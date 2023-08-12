@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poly.bean.Order;
 import com.poly.bean.OrderDetail;
+import com.poly.bean.Status;
 import com.poly.dao.OrderDAO;
 import com.poly.dao.OrderDetailDAO;
 import com.poly.service_bean.OrderService;
@@ -24,7 +25,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderDetailDAO ddao;
-
+	
+	
 	@Override
 	public Order create(JsonNode orderData) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -57,6 +59,45 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order findByID(Integer id) {
 		return dao.findById(id).get();
+	}
+
+	@Override
+	public void changeStatus(int id) {
+		Order ord = dao.findById(id).orElse(null);
+		
+		if(ord.getStatus().getStatus_id()==1) {
+			Status stt = new Status();
+			stt.setStatus_id(2);
+			stt.setStatus_name("Dang giao");
+			ord.setStatus(stt);
+		}else if(ord.getStatus().getStatus_id()==2) {
+			Status stt = new Status();
+			stt.setStatus_id(3);
+			stt.setStatus_name("Da nhan hang");
+			ord.setStatus(stt);
+		}else if(ord.getStatus().getStatus_id()==3) {
+			
+		}
+		
+		dao.save(ord);
+	}
+
+	@Override
+	public void cancelOrder(int id) {
+		Order ord = dao.findById(id).orElse(null);
+		if(ord != null) {
+			Status stt = new Status();
+			stt.setStatus_id(4);
+			stt.setStatus_name("Da huy");
+			ord.setStatus(stt);
+			dao.save(ord);
+		}
+		
+	}
+
+	@Override
+	public List<Order> getListOrderCancelled() {
+		return dao.getListOrderCancelled();
 	}
 
 

@@ -34,16 +34,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${products}">
-								<tr>
-									<th>${item.product_id}</th>
-									<td>${item.product_name}</td>
-									<td>${item.product_price}</td>
-									<td>${item.product_describe}</td>
-									<td><a href="/product/edit/${item.product_id}">Cập
+							
+								<tr th:each="item : ${products}">
+									<th th:utext="${item.product_id}">${item.product_id}</th>
+									<td th:utext="${item.product_name}">${item.product_name}</td>
+									<td th:utext="${item.product_price}">${item.product_price}</td>
+									<td th:utext="${item.product_describe}">${item.product_describe}</td>
+									<td ><a th:href="@{|/product/edit/${item.product_id}|}">Cập
 											nhật</a></td>
 								</tr>
-							</c:forEach>
 						</tbody>
 					</table>
 
@@ -57,16 +56,15 @@
 							</ul>
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade show active pt-3" id="addProduct">
-									<form action="/product/updateProduct" method="post">
-										
+									<form th:object="${prod}" action="/product/updateProduct" method="post"
+										enctype="multipart/form-data">
 										<div class="row mb-3">
 											<label for="" class="col-md-4 col-lg-3 col-form-label">Hình
 												ảnh</label>
 											<div class="col-md-8 col-lg-9">
-												<img src="/img/${item.product_img}" alt=""
-													style="width: 10%;">
+												<img src="" alt="" id="imgProduct" style="width: 10%;">
 												<div class="pt-2">
-													<input type="text" value="${item.product_img}" name="product_img" id="Filename" >
+													<input type="text"  th:field="*{product_img}" name="product_img" id="Filename" hidden>
 														<input type="file" class="fileform" id="formFile"
 															style="display: none;"> <label for="formFile"
 															id="customFile" onclick="defautlBtnIMG()"
@@ -83,10 +81,8 @@
 												class="col-md-4 col-lg-3 col-form-label">Tên Sản
 												Phẩm</label>
 											<div class="col-md-8 col-lg-9">
-												<input name="product_name"
-													value="${item.product_name}" type="text"
-													class="form-control" id="fullName"
-													placeholder="Tên sản phẩm" />
+												<input  th:field="*{product_name}" name="product_name" type="text" class="form-control"
+													id="fullName" placeholder="Tên sản phẩm">
 											</div>
 										</div>
 
@@ -94,31 +90,25 @@
 											<label for="about" class="col-md-4 col-lg-3 col-form-label">Mô
 												tả</label>
 											<div class="col-md-8 col-lg-9">
-												<input name="product_describe"
-													value="${item.product_describe}" class="form-control"
-													type="text" id="about" style="height: 100px" />
-
-
+												<textarea th:field="*{product_describe}"  name="product_describe" class="form-control"
+													id="about" style="height: 100px">
+                                                
+                                                </textarea>
 											</div>
 										</div>
 
 										<div class="row mb-3">
 											<label for="price" class="col-md-4 col-lg-3 col-form-label">Giá</label>
 											<div class="col-md-8 col-lg-9">
-												<input name="product_price"
-													value="${item.product_price}" type="text"
-													class="form-control" id="price" />
+												<input th:field="*{product_price}" name="product_price" type="text" class="form-control"
+													id="price">
 											</div>
 										</div>
-
-										
 										<div class="row mb-3">
 											<label for="Country" class="col-md-4 col-lg-3 col-form-label"></label>
 											<div class="col-md-8 col-lg-9">
-												<button type="submit" 
-													class="btn btn-primary">Cập nhật</button> <a type="submit"
-													href="/product/delete/${item.product_id}"
-													class="btn btn-primary">Xóa</a>
+												<button type="submit" class="btn btn-primary" >Cập nhật</button>
+											<a th:href="@{|/product/delete/*{product_id}|}" class="btn btn-primary">Xóa</a>
 											</div>
 
 										</div>

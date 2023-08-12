@@ -32,15 +32,15 @@ public class UserListController {
 	public String getUserList(Model m) {
 		m.addAttribute("lists", udao.findAll());
 		
-		return "/admin/userList";
+		return "manager/listUser";
 	}
 	
-	@GetMapping("/admin/historylogs")
+	@GetMapping("/admin/history")
 	public String getHistoryLogs(Model m) {
 		
 		m.addAttribute("logs", dao.findAll());
 		
-		return "/account/loginHistory";
+		return "manager/loginHistory";
 	}
 	
 	@GetMapping("/admin/delelelogs/{id}")
