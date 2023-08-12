@@ -11,7 +11,7 @@
             <h1>Thống Kê</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/Statistics.html">Trang Chủ</a></li>
+                    <li class="breadcrumb-item"><a href="/home/index">Trang Chủ</a></li>
                     <li class="breadcrumb-item active">Thống Kê</li>
                 </ol>
             </nav>
@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: blue; font-weight: 600;">999</h5>
+                                        <h5 class="card-title" style="color: blue; font-weight: 600;">1249</h5>
                                         <p class="card-text" style="color: gray;">Lượt xem</p>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: blue; font-weight: 600;">${luotMua }</h5>
+                                        <h5 th:utext="${luotMua }" class="card-title" style="color: blue; font-weight: 600;">${luotMua }</h5>
                                         <p class="card-text" style="color: gray;">Lượt bán</p>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: blue; font-weight: 600;">100</h5>
+                                        <h5 class="card-title" style="color: blue; font-weight: 600;">00</h5>
                                         <p class="card-text" style="color: gray;">Bình luận</p>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="font-weight: 600;">${doanhThu }</h5>
+                                        <h5 th:utext="${doanhThu }" class="card-title" style="font-weight: 600;">${doanhThu }</h5>
                                         <p class="card-text">Doanh thu</p>
                                     </div>
                                 </div>
@@ -92,15 +92,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="item" items="${listTK }" varStatus="loop">
-                        <tr>
-                            <th scope="row">${loop.index+1 }</th>
-                            <td>${item.name }</td>
-                            <td>${item.price }</td>
-                            <td>${item.total_qty }</td>
-                            <td>${item.total_qty * item.price }</td>
+                    
+                        <tr th:each = "item,state : ${listTK}">
+                            <th th:utext="${state.index+1 }" scope="row"></th>
+                            <td th:utext="${item.name }"></td>
+                            <td th:utext="${item.price }"></td>
+                            <td th:utext="${item.total_qty }"></td>
+                            <td th:utext="${item.total_qty * item.price }"></td>
                         </tr>
-                      </c:forEach>
                     </tbody>
                 </table>
             </div>

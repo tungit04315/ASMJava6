@@ -15,4 +15,8 @@ public interface InventoryService {
 	public Inventory update(Inventory product);
 
 	public void delete(Integer id);
+	
+	public Inventory findInvById(int vid);
+	
+	public void save(Inventory inv);
 }

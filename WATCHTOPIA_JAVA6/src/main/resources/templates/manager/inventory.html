@@ -33,15 +33,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${listInventory}">
-								<tr>
-									<th>${item.id}</th>
-									<td>${item.product.product_name}</td>
-									<td>${item.quantity}</td>
-									<td><a href="/admin/inventory/edit?id=${item.id }" style="text-decoration: none;">Cập
+			
+								<tr th:each="item:${listInventory}">
+									<th th:utext="${item.id}"></th>	
+									<td th:utext="${item.product.product_name}"></td>
+									<td th:utext="${item.quantity}"></td>
+									<td><a th:href="@{|/admin/inventory/edit?id=${item.id }|}" style="text-decoration: none;">Cập
 											nhật</a></td>
 								</tr>
-							</c:forEach>
+					
 						</tbody>
 					</table>
 
@@ -55,16 +55,16 @@
 							</ul>
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade show active pt-3" id="addProduct">
-									<form action="/admin/inventory/update" method="post">
+									<form th:object="${abc}" action="/admin/inventory/update" method="post">
 
-										<input type="hidden" name="idInventory" value="${itemInven.id}">
+									
 										<div class="row mb-3">
 											<label for="fullName"
 												class="col-md-4 col-lg-3 col-form-label">Tên Sản
 												Phẩm</label>
 											<div class="col-md-8 col-lg-9">
 												<input name="product_name"
-													value="${itemInven.product.product_name}" type="text"
+													th:field="*{product.product_name}" type="text"
 													class="form-control" id="fullName" readonly="readonly"
 													placeholder="Tên sản phẩm" />
 											</div>
@@ -74,7 +74,7 @@
 											<label for="about" class="col-md-4 col-lg-3 col-form-label">Số lượng</label>
 											<div class="col-md-8 col-lg-9">
 												<input name="quantity"
-													value="${itemInven.quantity}" min="0" class="form-control"
+													th:field="*{quantity}"min="0" class="form-control"
 													type="number" id="about"  />
 											</div>
 										</div>

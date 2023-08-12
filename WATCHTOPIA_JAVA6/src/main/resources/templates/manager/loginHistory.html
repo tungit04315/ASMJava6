@@ -30,12 +30,12 @@
                 </thead>
                 <tbody>
                 
-                    <tr>
-                        <td>${item.user.fullname}</td>
-                        <td>${item.user.email}</td>
-                        <td>${item.login_time}</td>
-                        <td>${item.login_out}</td>
-                        <td><a href="/admin/delelelogs/${item.log_id}">Xóa</a></td>
+                    <tr th:each="item : ${logs}">
+                        <td th:utext="${item.user.fullname}">${item.user.fullname}</td>
+                        <td th:utext="${item.user.email}">${item.user.email}</td>
+                        <td th:utext="${item.login_time}">${item.login_time}</td>
+                        <td th:utext="${item.login_out}">${item.login_out}</td>
+                        <td><a href="@{|/admin/delelelogs/${item.log_id}|}">Xóa</a></td>
                     </tr>
                
                 </tbody>

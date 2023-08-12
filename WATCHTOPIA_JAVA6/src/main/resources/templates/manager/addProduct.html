@@ -32,7 +32,7 @@
 							</ul>
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade show active pt-3" id="addProduct">
-									<form action="/product/addproduct" method="post"
+									<form th:object="${prod}" action="/product/addproduct" method="post"
 										enctype="multipart/form-data">
 										<div class="row mb-3">
 											<label for="" class="col-md-4 col-lg-3 col-form-label">Hình
@@ -40,7 +40,7 @@
 											<div class="col-md-8 col-lg-9">
 												<img src="" alt="" id="imgProduct" style="width: 10%;">
 												<div class="pt-2">
-													<input type="text" name="product_img" id="Filename" hidden>
+													<input type="text"  th:field="*{product_img}" name="product_img" id="Filename" hidden>
 														<input type="file" class="fileform" id="formFile"
 															style="display: none;"> <label for="formFile"
 															id="customFile" onclick="defautlBtnIMG()"
@@ -57,7 +57,7 @@
 												class="col-md-4 col-lg-3 col-form-label">Tên Sản
 												Phẩm</label>
 											<div class="col-md-8 col-lg-9">
-												<input name="product_name" type="text" class="form-control"
+												<input  th:field="*{product_name}" name="product_name" type="text" class="form-control"
 													id="fullName" placeholder="Tên sản phẩm">
 											</div>
 										</div>
@@ -66,7 +66,7 @@
 											<label for="about" class="col-md-4 col-lg-3 col-form-label">Mô
 												tả</label>
 											<div class="col-md-8 col-lg-9">
-												<textarea name="product_describe" class="form-control"
+												<textarea th:field="*{product_describe}"  name="product_describe" class="form-control"
 													id="about" style="height: 100px">
                                                 
                                                 </textarea>
@@ -76,7 +76,7 @@
 										<div class="row mb-3">
 											<label for="price" class="col-md-4 col-lg-3 col-form-label">Giá</label>
 											<div class="col-md-8 col-lg-9">
-												<input name="product_price" type="text" class="form-control"
+												<input th:field="*{product_price}" name="product_price" type="text" class="form-control"
 													id="price">
 											</div>
 										</div>
@@ -85,11 +85,11 @@
 											<label for="brand" class="col-md-4 col-lg-3 col-form-label">Thương
 												hiệu</label>
 											<div class="col-md-8 col-lg-9">
-												<select class="form-select" name="branch"
+												<select th:field="*{branch}"  class="form-select" name="branch"
 													aria-label="Default select example">
-													<c:forEach var="item" items="${branchs}">
-														<option value="${item.brands_id}">${item.brands_name}</option>
-													</c:forEach>
+													
+														<option th:each="br : ${branchs}" th:text="${br.brands_name}" th:value="${br.brands_id}" ></option>
+												
 												</select>
 											</div>
 										</div>
@@ -97,11 +97,11 @@
 										<div class="row mb-3">
 											<label for="Country" class="col-md-4 col-lg-3 col-form-label">Loại</label>
 											<div class="col-md-8 col-lg-9">
-												<select class="form-select" name="type"
+												<select th:field="*{type}" class="form-select" name="type"
 													aria-label="Default select example">
-													<c:forEach var="item" items="${types}">
-														<option value="${item.types_id}">${item.types_name}</option>
-													</c:forEach>
+													
+														<option th:each="item_type : ${types}" th:text="${item_type.types_name}" th:value="${item_type.types_id}"></option>
+												
 												</select>
 											</div>
 										</div>
