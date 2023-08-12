@@ -9,7 +9,7 @@ app.run(function($http, $rootScope) {
             console.log($auth.user.fullname)
 
             $http.defaults.headers.common["Authorization"] = $auth.token;
-
+            //$scope.order.fullname = $auth.user.fullname;
         }
     });
 })
@@ -27,6 +27,7 @@ app.run(function($http, $rootScope) {
 
 
 app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
+
 
     // QUAN LY GIO HANG
     $scope.cart = {
