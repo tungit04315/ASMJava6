@@ -42,7 +42,9 @@ public class HomeController {
 	
 	@RequestMapping("/home/cart")
 	public String GetCart(Model m, HttpSession ss) {
-		
+		Users u = (Users) ss.getAttribute("users");
+		System.out.println(u.getEmail());
+		m.addAttribute("email", u.getEmail());
 		return "home/cart";
 	}
 	
