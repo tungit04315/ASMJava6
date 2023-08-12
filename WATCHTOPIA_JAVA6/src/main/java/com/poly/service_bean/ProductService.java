@@ -18,6 +18,8 @@ public interface ProductService {
 	public Products create(Products product);
 
 	public Products update(Products product);
+	
+	public Products findTop1ProductIdBySQL();
 
 	public void delete(Integer id);
 }

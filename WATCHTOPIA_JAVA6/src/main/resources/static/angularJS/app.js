@@ -7,6 +7,7 @@ app.run(function($http, $rootScope) {
             console.log(resp.data)
             console.log($auth.token)
             console.log($auth.user.fullname)
+
             $http.defaults.headers.common["Authorization"] = $auth.token;
 
         }
@@ -26,6 +27,7 @@ app.run(function($http, $rootScope) {
 
 
 app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
+
     // QUAN LY GIO HANG
     $scope.cart = {
         items: [],
@@ -94,7 +96,10 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
         orders_time: new Date(),
         orders_address: "",
         voucher: null,
-        status: null,
+        status: {
+            status_id: 1,
+            status_name: "Chờ xác nhận",
+        },
 
         get orderDetails() {
             return $scope.cart.items.map(item => {
@@ -109,18 +114,22 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
         },
 
         purchase() {
-            var order = angular.copy(this);
+            if ($scope.userForm.$valid) {
+                var order = angular.copy(this);
 
-            $http.post("/rest/orders", order).then(resp => {
-                swal("Thành Công!", "Thanh Toán Thành Công!", "success");
-                $scope.cart.clear();
+                $http.post("/rest/orders", order).then(resp => {
+                    swal("Thành Công!", "Thanh Toán Thành Công!", "success");
+                    $scope.cart.clear();
 
-                location.href = "/order/detail/" + resp.data.orders_id;
+                    location.href = "/order/detail/" + resp.data.orders_id;
 
-            }).catch(error => {
-                swal("Thất Bại!", "Thanh Toán Thất Bại!", "warring");
-                console.log(error)
-            })
+                }).catch(error => {
+                    swal("Thất Bại!", "Thanh Toán Thất Bại!", "warning");
+                    console.log(error)
+                })
+            } else {
+                swal("Thất Bại!", "Vui lòng kiểm tra lại thông tin!", "warning");
+            }
         }
     }
 })

@@ -75,7 +75,7 @@
                                 </table>
                             </div>
 
-                            <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
+                            <form class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;" name="userForm" novalidate>
                                 <div class="card-body p-4">
                                     <div class="row">
                                         <div class="col-md-9 col-lg-4 col-xl-9">
@@ -96,29 +96,34 @@
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeExp">Tên Người Nhận
 														</label>
-                                                        <input type="text" id="typeExp exp" ng-model="order.fullname" class="form-control form-control-lg" placeholder="Tên người nhận" />
+                                                        <input type="text" id="typeExp exp" name="fullname" class="form-control form-control-lg" placeholder="Tên người nhận" ng-model="order.fullname" ng-value="$auth.user.fullname" />
+                                                        <!-- <span ng-show="userForm.fullname.$error.required && userForm.fullname.$dirty">Không được để trống tên người nhận.</span> -->
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeExp">Email
 														</label>
-                                                        <input type="email" id="typeExp exp" ng-model="order.email" class="form-control form-control-lg" placeholder="Email" />
+                                                        <input type="text" id="typeExp exp" ng-model="order.email" ng-value="$auth.user.email" class="form-control form-control-lg" placeholder="Email" />
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeExp">Số Điện Thoại
-														 </label> <input type="text" id="typeExp" ng-model="order.phone" class="form-control form-control-lg" placeholder="Số điện thoại" />
+														 </label> <input type="text" id="typeExp" name="phoneNumber" ng-model="order.phone" class="form-control form-control-lg" placeholder="Số điện thoại" required ng-pattern="/^0\d{9,10}$/"
+                                                        />
+                                                        <span ng-show="userForm.phoneNumber.$error.required && userForm.phoneNumber.$dirty">Không được để trống số điện thoại.</span>
+                                                        <span ng-show="userForm.phoneNumber.$error.pattern && userForm.phoneNumber.$dirty">Số điện thoại không được quá 10 ký tự.</span>
                                                     </div>
 
                                                     <div class="form-outline mb-4 mb-xl-5">
                                                         <label class="form-label" for="typeName">Địa chỉ</label>
-                                                        <textarea rows="" cols="" id="typeName" ng-model="order.orders_address" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
+                                                        <textarea rows="" cols="" name="address" id="typeName" ng-model="order.orders_address" class="form-control form-control-lg" placeholder="Địa chỉ" required></textarea>
+                                                        <span ng-show="userForm.address.$error.required && userForm.address.$dirty">Không để trống địa chỉ nhận hàng.</span>
                                                     </div>
                                                     <div class="form-outline mb-4 mb-xl-5" hidden>
-                                                        <label class="form-label" for="typeName">Địa chỉ</label>
+                                                        <label class="form-label" for="typeName">Voucher</label>
                                                         <textarea rows="" cols="" id="typeName" ng-model="order.voucher" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
                                                     </div>
 
                                                     <div class="form-outline mb-4 mb-xl-5" hidden>
-                                                        <label class="form-label" for="typeName">Địa chỉ</label>
+                                                        <label class="form-label" for="typeName">Trạng Thái</label>
                                                         <textarea rows="" cols="" id="typeName" ng-model="order.status" class="form-control form-control-lg" placeholder="Địa chỉ"></textarea>
                                                     </div>
 
@@ -145,7 +150,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
