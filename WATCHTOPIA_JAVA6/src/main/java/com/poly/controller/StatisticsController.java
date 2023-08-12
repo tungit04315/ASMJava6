@@ -18,7 +18,7 @@ public class StatisticsController {
 	ThongKeService tkDao;
 	double tongTien = 0, doanhThu=0;
 	
-	@RequestMapping("/admin/thongke")
+	@RequestMapping("/admin/index")
 //	@ResponseBody
 	public String showTK(Model m) {
 		List<ThongKe> listTK = tkDao.getListTK();
@@ -30,6 +30,6 @@ public class StatisticsController {
 		m.addAttribute("doanhThu", doanhThu);
 		m.addAttribute("luotMua", tkDao.getLuotMua());
 		
-		return "/admin/statistic";
+		return "/admin/index";
 	}
 }

@@ -9,9 +9,15 @@ public interface OrderService {
 
 	public List<Order> findAllOrder();
 	
+	public List<Order> getListOrderCancelled();
+	
 	public Order findByID(Integer id);
 	
 	public Order create(JsonNode orderData);
 
 	public List<Order> findByUsername(String username);
+	
+	public void changeStatus(int id);
+	
+	public void cancelOrder(int id);
 }

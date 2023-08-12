@@ -23,9 +23,8 @@
 			<table class="table table-striped table-dark">
 				<thead class="table-light">
 					<tr>
-						<th scope="col">Mã</th>
+						<th scope="col">Username</th>
 						<th scope="col">Họ Và Tên</th>
-						<th scope="col">Mật Khẩu</th>
 						<th scope="col">Email</th>
 						<th scope="col">Số Điện Thoại</th>
 						<th scope="col"></th>
@@ -33,13 +32,12 @@
 				</thead>
 				<tbody>
 					<!-- <c:forEach var="list" items="${lists}"> -->
-						<tr>
-							<th>${list.users_id}</th>
-							<td>${list.fullname}</td>
-							<td>${list.passwords}</td>
-							<td>${list.email}</td>
-							<td>${list.phone}</td>
- 							<td><a href="/amdin/deleteUser/${list.users_id}">Xóa</a></td>
+						<tr th:each="list : ${lists}">
+							<th th:utext="${list.username}">${list.username}</th>
+							<td th:utext="${list.fullname}">${list.fullname}</td>
+							<td th:utext="${list.email}">${list.email}</td>
+							<td th:utext="${list.phone}">${list.phone}</td>
+ 							<td><a th:href="@{|/amdin/deleteUser/${list.username}|}">Xóa</a></td>
 						</tr>
 					<!-- </c:forEach> -->
 				</tbody>

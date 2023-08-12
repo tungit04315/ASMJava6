@@ -22,4 +22,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer>{
 	
 	@Query("SELECT o FROM Order o")
 	List<Order> findAllOrder();
+	
+	@Query("SELECT o FROM Order o where o.status.status_id = 4")
+	List<Order> getListOrderCancelled();
 }

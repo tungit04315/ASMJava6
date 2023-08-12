@@ -33,26 +33,31 @@
 			</c:if> -->
 			<div class="container">
 				<div class="row">										
-						<div class="col-sm-6 col-xl-3">
+						<div class="col-sm-6 col-xl-3" th:each="p: ${items}">
+                        <div class="box">
+                            <a th:href="@{|/home/details/${p.product_id}|}">
+                                <div class="img-box">
+                                    <img th:src="@{|/img/${p.product_img}|}" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h6 th:utext="${p.product_name}">
 
-							<div class="box">
-								
-									<div class="img-box">
-										<img src="/img/${p.product_img}" alt="">
-									</div>
-									<div class="detail-box">
-										<h6>${p.product_name}</h6>
-										<h6>
-											Giá: <span> ${p.product_price} VNĐ </span>
-										</h6>
-									</div>
-									<div class="new">
-										<span> Mới </span>
-									</div>
-								
-							</div>
-
-						</div>
+                                    </h6>
+                                    <h6>
+                                        Giá:
+                                        <span th:utext="${p.product_price}">
+                                            
+                                        </span>
+                                    </h6>
+                                </div>
+                                <div class="new">
+                                    <span>
+                                        Mới
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 				</div>
 				
 			</div>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,16 +49,16 @@ public class ProductController {
 		
 		List<Branch> branchs = branchDAO.findAll();
 		List<ProductType> types = typeDAO.findAll();
-		
+		Products p = new Products();
+		m.addAttribute("prod",p );
 		m.addAttribute("types", types);
 		m.addAttribute("branchs", branchs);
-		
-		return "/admin/AddProduct";
+		return "manager/addProduct";
 	}
 	
 	
 	@PostMapping("/product/addproduct")
-	public String SetAddProduct(Model m, Products p) {
+	public String SetAddProduct(Model m, @ModelAttribute Products p) {
 		try {
 //			String img = file.getOriginalFilename();
 			String img = param.getString("product_img", "");
@@ -72,11 +73,12 @@ public class ProductController {
 			Inventory inven = new Inventory();
 			
 			inven.setProduct(newProduct);
-			inven.setQuantity(0);
+			inven.setQuantity(1);
 			inventoryDao.create(inven);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Loi them sp");
 		}
 		return "redirect:/product/addproduct";
 		
@@ -89,15 +91,16 @@ public class ProductController {
 	public String getUpdateProduct(Model m) {
 		
 		List<Products> p = dao.findAll();
-		
+		Products prod = new Products();
 		List<Branch> branchs = branchDAO.findAll();
 		List<ProductType> types = typeDAO.findAll();
 		
+		
 		m.addAttribute("typesList", types);
 		m.addAttribute("branchsList", branchs);
-		
 		m.addAttribute("products", p);
-		return "/admin/UpdateProduct";
+		m.addAttribute("prod",prod );
+		return "manager/updateProduct";
 		///
 	}
 	
@@ -112,15 +115,16 @@ public class ProductController {
 		
 		m.addAttribute("typesList", types);
 		m.addAttribute("branchsList", branchs);
-		
+		Products prod = dao.findById(id);
+		m.addAttribute("prod",prod );
 		ss.setAttribute("id", item.getProduct_id());
 		
 		m.addAttribute("products", items);
-		return "/admin/UpdateProduct";
+		return "manager/updateProduct";
 	}
 	
 	@PostMapping("/product/updateProduct")
-	public String update(Products item)  {
+	public String update(@ModelAttribute Products item)  {
 		
 		int id = ss.getAttribute("id");
 		
@@ -149,6 +153,6 @@ public class ProductController {
 		
 		List<Products> items = dao.findAll();
 		m.addAttribute("items", items);
-		return "/admin/listProduct";
+		return "manager/listProduct";
 	}
 }
