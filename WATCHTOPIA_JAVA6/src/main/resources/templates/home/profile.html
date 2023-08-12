@@ -34,7 +34,7 @@
                 </div>
                 <nav id="navbar" class="nav-menu navbar">
                     <ul>
-						<li><a href="/home/index" class="nav-link scrollto"><i class="fa-solid fa-house" style="color: #ffffff;"></i> <span>Trang chủ</span></a></li>
+                        <li><a href="/home/index" class="nav-link scrollto"><i class="fa-solid fa-house" style="color: #ffffff;"></i> <span>Trang chủ</span></a></li>
                         <li><a href="#updateProflie" class="nav-link scrollto"><i class="fa-solid fa-pen-to-square text-white"></i> <span>Cập Nhật Thông Tin Cá Nhân</span></a></li>
                         <li><a href="#passwordUpdate" class="nav-link scrollto"><i class="fa-solid fa-passport text-white"></i> <span>Đổi Mật Khẩu</span></a></li>
                         <li><a href="/account/logoff" class="nav-link scrollto"><i class="fa-solid fa-arrow-right-from-bracket text-white"></i> <span>Đăng Xuất</span></a></li>
@@ -56,30 +56,30 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="">Username</label>
-                                        <input type="text" name="username"  class="form-control" placeholder="Username" th:value="${profile.username}">
+                                        <input type="text" name="username" class="form-control" placeholder="Username" th:value="${u.username}">
                                     </div>
                                     <div class="col"></div>
                                 </div>
-                                <div class="row"style="margin-top: 20px; margin-bottom: 20px;">
+                                <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
                                     <div class="col">
                                         <label for="">Họ và tên</label>
-                                        <input type="text" name="fullname" th:value="${profile.fullname}" class="form-control" placeholder="Họ và tên">
+                                        <input type="text" name="fullname" th:value="${u.fullname}" class="form-control" placeholder="Họ và tên">
                                     </div>
                                     <div class="col">
                                         <label for="">Email</label>
-                                        <input type="text" name="email" th:value="${profile.email}" class="form-control" placeholder="abc@gmail.com">
+                                        <input type="text" name="email" th:value="${u.email}" class="form-control" placeholder="abc@gmail.com">
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
                                     <div class="col">
                                         <label for="">Số điện thoại</label>
-                                        <input type="text" name="phone" th:value="${profile.phone}" class="form-control" placeholder="XXXXXXXXXX">
+                                        <input type="text" name="phone" th:value="${u.phone}" class="form-control" placeholder="XXXXXXXXXX">
                                     </div>
                                     <div class="col"></div>
-                                     <div class="col" hidden>
+                                    <div class="col" hidden>
                                         <!-- <label for="">Mật khẩu</label> -->
-                                        <input type="text" name="passwords" th:value="${profile.passwords}" class="form-control" placeholder="XXXXXXXXXX">
-                                     </div>
+                                        <input type="text" name="passwords" th:value="${u.passwords}" class="form-control" placeholder="XXXXXXXXXX">
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-outline-secondary btn-update">Cập nhật</button>
                             </div>
@@ -123,8 +123,8 @@
                             Bạn quên mật khẩu?
                         </a>
                         <div>
-				<div th:if="${successPass} == true" class="alert alert-success" role="alert">Cập nhật thành công!</div>
-				<div th:if="${errorPass} == true" class="alert alert-danger" role="alert">Kiểm tra lại mật khẩu!</div>
+                            <div th:if="${successPass} == true" class="alert alert-success" role="alert">Cập nhật thành công!</div>
+                            <div th:if="${errorPass} == true" class="alert alert-danger" role="alert">Kiểm tra lại mật khẩu!</div>
                         </div>
                     </form>
                 </div>
