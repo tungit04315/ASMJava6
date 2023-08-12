@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -63,32 +64,29 @@ public class AccountController {
 	@RequestMapping("/account/login/success")
 	public String success(Model model) {
 //		model.addAttribute("message", "Đăng nhập thành công!");
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	         List<String> authList = new ArrayList<>();
+	         // Check if the user is authenticated
+	         if (authentication != null && authentication.isAuthenticated()) {
+	            List<String> roleNames = accountService.getRolesByUsername(authentication.getName());
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-         List<String> authList = new ArrayList<>();
-         // Check if the user is authenticated
-         if (authentication != null && authentication.isAuthenticated()) {
-            List<String> roleNames = accountService.getRolesByUsername(authentication.getName());
+	            for (String roleName : roleNames) {
+	               authList.add("ROLE_" + roleName);
+	            }
+	         }
 
-            for (String roleName : roleNames) {
-               authList.add("ROLE_" + roleName);
-            }
-         }
-
-		if(authList.contains("ROLE_ADMIN")){
-			
-			return "redirect:/admin/index";
-		} 
-		else{
-			ss.setAttribute("auth", authentication);
-			return"redirect:/home/index";
-		}
-		
+			if(authList.contains("ROLE_ADMIN")){
+				
+				return "redirect:/admin/index";
+			} 
+			else{
+				return"redirect:/home/index";
+			}
 	}
 	
 	@RequestMapping("/account/login/error")
 	public String loginError(Model model) {
-//		model.addAttribute("message", "Sai thông tin đăng nhập!");
+		model.addAttribute("errorlogin", true);
 		return "account/login";
 	}
 	
@@ -113,6 +111,12 @@ public class AccountController {
 	@RequestMapping("/account/forget")
 	public String getForgetPassword(Model m) {
 		return "account/forgetPassword";
+	}
+	//post forgetpass
+	@PostMapping("/account/forgetPassword")
+	public String forgetPass(Model m) {
+		
+		return null;
 	}
 	
 	@RequestMapping("/account/change")
