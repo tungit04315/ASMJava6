@@ -71,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				return User.withUsername(username).password(password).roles(roles).build();
 			} catch (NoSuchElementException e) {
 				throw new UsernameNotFoundException(username + " not found!");
-			}catch (InternalAuthenticationServiceException e) {
+			}
+			catch (InternalAuthenticationServiceException e) {
 				throw new UsernameNotFoundException(username + " not found!");
 			}
 			catch (IllegalArgumentException e) {
