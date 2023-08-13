@@ -1,18 +1,19 @@
 const app = angular.module("shopping-cart", []);
 
-app.run(function($http, $rootScope) {
-    $http.get(`/rest/security/authentication`).then(resp => {
-        if (resp.data) {
-            $auth = $rootScope.$auth = resp.data;
-            console.log(resp.data)
-            console.log($auth.token)
-            console.log($auth.user.fullname)
+// app.run(function($http, $rootScope) {
+//     $http.get(`/rest/security/authentication`).then(resp => {
+//         if (resp.data) {
+//             $auth = $rootScope.$auth = resp.data;
+//             console.log(resp.data)
+//             console.log($auth.token)
+//             console.log($auth.user.fullname)
 
-            $http.defaults.headers.common["Authorization"] = $auth.token;
-            //$scope.order.fullname = $auth.user.fullname;
-        }
-    });
-})
+//             $http.defaults.headers.common["Authorization"] = $auth.token;
+//             $rootScope.fullname = $auth.user.fullname;
+//             console.log("FULLNAME 2: " + $rootScope.fullname)
+//         }
+//     });
+// })
 
 // var getAccountApiURL = 'http://localhost:8080/api/account';
 // app.run(function($http, $rootScope) {
@@ -114,10 +115,29 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
             });
         },
 
+        getAccount() {
+            $http.get(`/rest/security/authentication`).then(resp => {
+                if (resp.data) {
+                    $auth = $rootScope.$auth = resp.data;
+                    console.log(resp.data)
+                    console.log($auth.token)
+                    console.log($auth.user.fullname)
+
+                    $http.defaults.headers.common["Authorization"] = $auth.token;
+                    $scope.order.fullname = $auth.user.fullname;
+                    $scope.order.email = $auth.user.email;
+                    console.log("FULLNAME 2: " + $auth.user.fullname)
+                }
+            });
+        },
+
         purchase() {
             if ($scope.userForm.$valid) {
-                var order = angular.copy(this);
 
+
+
+                var order = angular.copy(this);
+                console.log(order);
                 $http.post("/rest/orders", order).then(resp => {
                     swal("Thành Công!", "Thanh Toán Thành Công!", "success");
                     $scope.cart.clear();
@@ -133,4 +153,6 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
             }
         }
     }
+
+    $scope.order.getAccount();
 })
