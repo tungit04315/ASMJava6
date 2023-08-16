@@ -31,7 +31,7 @@
 
                                 <th scope="col">Người Đặt Hàng</th>
                                 <th scope="col">Thời Gian</th>
-                                 <th scope="col">Trạng thái</th>
+                                <th scope="col">Trạng thái</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -45,8 +45,8 @@
                                 <td class="col">[[${order.orders_time}]]</td>
                                 <td class="col">[[${order.status.status_name}]]</td>
                                 <td class="col">
-									<a th:href="@{|/admin/order/update/${order.orders_id}|}" ><button th:disabled="${order.status.status_id > 2}" class="btn btn-primary">Cập nhật</button></a>
-									<a th:href="@{|/admin/order/detele/${order.orders_id}|}" ><button th:disabled="${order.status.status_id==4}" class="btn btn-danger">Hủy đơn</button></a>
+                                    <a th:href="@{|/admin/order/update/${order.orders_id}|}"><button th:disabled="${order.status.status_id > 2}" class="btn btn-primary">Cập nhật</button></a>
+                                    <a th:href="@{|/admin/order/detele/${order.orders_id}|}"><button th:disabled="${order.status.status_id>=3}" class="btn btn-danger">Hủy đơn</button></a>
                                 </td>
                             </tr>
                         </tbody>

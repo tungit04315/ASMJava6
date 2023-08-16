@@ -68,12 +68,12 @@ public class OrderServiceImpl implements OrderService {
 		if(ord.getStatus().getStatus_id()==1) {
 			Status stt = new Status();
 			stt.setStatus_id(2);
-			stt.setStatus_name("Dang giao");
+			stt.setStatus_name("Đang giao");
 			ord.setStatus(stt);
 		}else if(ord.getStatus().getStatus_id()==2) {
 			Status stt = new Status();
 			stt.setStatus_id(3);
-			stt.setStatus_name("Da nhan hang");
+			stt.setStatus_name("Đã nhận hàng");
 			ord.setStatus(stt);
 		}else if(ord.getStatus().getStatus_id()==3) {
 			
@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 		if(ord != null) {
 			Status stt = new Status();
 			stt.setStatus_id(4);
-			stt.setStatus_name("Da huy");
+			stt.setStatus_name("Đã hủy");
 			ord.setStatus(stt);
 			dao.save(ord);
 		}

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -71,8 +72,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			} catch (NoSuchElementException e) {
 				throw new UsernameNotFoundException(username + " not found!");
 			}
+			catch (InternalAuthenticationServiceException e) {
+				throw new UsernameNotFoundException(username + " not found!");
+			}
+			catch (IllegalArgumentException e) {
+				throw new UsernameNotFoundException(username + " not found!");
+			}catch (NullPointerException e) {
+				throw new UsernameNotFoundException(username + " not found!");
+			}
 		});
-	}
+	}//new
 
 	// Phân quyền sử dụng
 	@Override

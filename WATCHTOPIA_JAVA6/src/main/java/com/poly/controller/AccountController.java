@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,67 +36,62 @@ import com.poly.service_impl.UsersServiceImpl;
 
 import ch.qos.logback.core.joran.conditional.ThenOrElseActionBase;
 
-
 @Controller
 public class AccountController {
 	@Autowired
 	UsersService userService;
-	
+
 	@Autowired
 	UserRoleService userRoleService;
-	
+
 	@Autowired
 	RoleService roleService;
-	
+
 	@Autowired
 	UsersService accountService;
-	
+
 	@Autowired
 	EmailSenderService emailService;
-	
+
 	@Autowired
 	SessionService ss;
 
 	@Autowired
 	ParamService param;
-	
+
 	@RequestMapping("/account/login/form")
 	public String getLogin(Model m) {
 		return "account/login";
 	}
-	
+
 	@RequestMapping("/account/login/success")
 	public String success(Model model) {
 //		model.addAttribute("message", "Đăng nhập thành công!");
-
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-         List<String> authList = new ArrayList<>();
-         // Check if the user is authenticated
-         if (authentication != null && authentication.isAuthenticated()) {
-            List<String> roleNames = accountService.getRolesByUsername(authentication.getName());
+		List<String> authList = new ArrayList<>();
+		// Check if the user is authenticated
+		if (authentication != null && authentication.isAuthenticated()) {
+			List<String> roleNames = accountService.getRolesByUsername(authentication.getName());
 
-            for (String roleName : roleNames) {
-               authList.add("ROLE_" + roleName);
-            }
-         }
-
-		if(authList.contains("ROLE_ADMIN")){
-			
-			return "redirect:/admin/index";
-		} 
-		else{
-			ss.setAttribute("auth", authentication);
-			return"redirect:/home/index";
+			for (String roleName : roleNames) {
+				authList.add("ROLE_" + roleName);
+			}
 		}
-		
+
+		if (authList.contains("ROLE_ADMIN")) {
+
+			return "redirect:/admin/index";
+		} else {
+			ss.setAttribute("auth", ss.getAttribute("users"));
+			return "redirect:/home/index";
+		}
 	}
-	
+
 	@RequestMapping("/account/login/error")
 	public String loginError(Model model) {
-//		model.addAttribute("message", "Sai thông tin đăng nhập!");
+		model.addAttribute("errorlogin", true);
 		return "account/login";
 	}
-	
 
 //	@RequestMapping("/account/unauthoried")
 //	public String unauthoried(Model model) {
@@ -108,141 +104,152 @@ public class AccountController {
 		model.addAttribute("message", "Bạn đã đăng xuất!");
 		return "account/login";
 	}
-	
+
 	@RequestMapping("/account/register/form")
 	public String getRegister(Model m) {
 		return "account/register";
 	}
-	
+
 	@RequestMapping("/account/forget")
 	public String getForgetPassword(Model m) {
 		return "account/forgetPassword";
 	}
-	
+
+	// post forgetpass
+	@PostMapping("/account/forgetPassword")
+	public String forgetPass(Model m) {
+
+		return null;
+	}
+
 	@RequestMapping("/account/change")
 	public String getChange(Model m) {
 		return "account/changePassword";
 	}
-	
+
 	@RequestMapping("/account/OTP")
 	public String getOTP(Model m) {
 		return "account/otp";
 	}
-	
-	//POST
+
+	// POST
 	@PostMapping("/account/registers")
 	public String Register(Model m, Users u, @Param("username") String username) {
-		//System.out.println("xuất mẫu:"+userService.findById(username));
+		// System.out.println("xuất mẫu:"+userService.findById(username));
 		Users ufind = userService.findById(username);
-		if(ufind != null) {
-			m.addAttribute("errorUsername","true");
-		}else {
+		if (ufind != null) {
+			m.addAttribute("errorUsername", "true");
+		} else {
 			userService.create(u);
-			
+
 			UserRole uRole = new UserRole();
 			uRole.setUsername(u);
 			uRole.setRoleid(roleService.findbyId("USER"));
 			userRoleService.create(uRole);
-			
+
 			m.addAttribute("successRegister", "true");
 		}
 		return "account/register";
 	}
-	
+
 	@PostMapping("/account/changeprofile")
-	public String ChangeProfile(Model m, Users u,@Param("username") String username) {
+	public String ChangeProfile(Model m, Users u, @Param("username") String username) {
 		userService.update(u);
-		Users user =  (Users) ss.getAttribute("users");
-		m.addAttribute("profile", userService.findById(user.getUsername()));
+		Users user = (Users) ss.getAttribute("users");
+		m.addAttribute("u", userService.findById(user.getUsername()));
 		return "home/profile";
 	}
-	
+
 	@PostMapping("/account/changePassProfile")
-	public String ChangePassProfile(Model m, Users u,@Param("passwords") String passwords) {
-		Users user =  (Users) ss.getAttribute("users");
-		
+	public String ChangePassProfile(Model m, 
+			Users u, @Param("passwords") String passwords) {
+		Users user = (Users) ss.getAttribute("users");
+
 		String passwordsnew = param.getString("passwordsNew", "");
 		String passwordsnew2 = param.getString("passwordsNew2", "");
-		
-		if(!passwords.equalsIgnoreCase(user.getPasswords())) {
-			m.addAttribute("errorPass",true);
+
+		if (!passwords.equalsIgnoreCase(user.getPasswords())) {
+			m.addAttribute("errorPass", true);
 		}
-		if(!passwordsnew.equalsIgnoreCase(passwordsnew2)) {
-			m.addAttribute("errorPass",true);
-		}
-		else {
-			u.setUsername(user.getUsername());
-			u.setFullname(user.getFullname());
-			u.setPasswords(user.getPasswords());
-			u.setEmail(user.getEmail());
-			u.setPhone(user.getPhone());
-			u.setActive(user.isActive());
-			u.setCreatedate(user.getCreatedate());
-			u.setFailed_login_attempts(user.getFailed_login_attempts());
-			u.setBlocked(user.isBlocked());
-			u.setLogs(user.getLogs());
-			u.setUserRole(user.getUserRole());
-			
-			u.setPasswords(passwordsnew);
-			userService.update(u);
-			Users user2 =  (Users) ss.getAttribute("users");
-			
-			m.addAttribute("profile", userService.findById(user2.getUsername()));
-			m.addAttribute("successPass",true);
+		if (!passwordsnew.equalsIgnoreCase(passwordsnew2)) {
+			m.addAttribute("errorPass", true);
+		} else {
+			if (passwords.equalsIgnoreCase(user.getPasswords())) {
+				if (passwordsnew.equalsIgnoreCase(passwordsnew2)) {
+					u.setUsername(user.getUsername());
+					u.setFullname(user.getFullname());
+					u.setPasswords(user.getPasswords());
+					u.setEmail(user.getEmail());
+					u.setPhone(user.getPhone());
+					u.setActive(user.isActive());
+					u.setCreatedate(user.getCreatedate());
+					u.setFailed_login_attempts(user.getFailed_login_attempts());
+					u.setBlocked(user.isBlocked());
+					u.setLogs(user.getLogs());
+					u.setUserRole(user.getUserRole());
+
+					u.setPasswords(passwordsnew);
+//					user.setPasswords(passwordsnew);
+					userService.update(u);
+
+					m.addAttribute("u", u);
+					m.addAttribute("successPass", true);
+					return "home/profile";
+				} else {
+					return "home/profile";
+				}
+			} else {
+				m.addAttribute("errorPass", true);
+				m.addAttribute("u", userService.findById(user.getUsername()));
+				return "home/profile";
+			}
 		}
 		return "home/profile";
 	}
-	
+
 //	@CrossOrigin("*")
 //	@ResponseBody
 //	@RequestMapping("/rest/security/authentication")
 //	public Object getAuthentication(HttpSession session) {
 //		return session.getAttribute("authentication");
 //	}
-	
-	
-	
+
 	@RequestMapping("/account/forgetpassword")
 	public String getPassword() {
 		return "account/forgetPassword";
 	}
-	
+
 	@PostMapping("/account/forgetPassword")
 	public String PostPassword(Model m, @Param("username") String username) {
-		
+
 		Users u = userService.findById(username);
-		
-		
-		if(u != null) {
-			
+
+		if (u != null) {
+
 			int min = 1000;
 			int max = 10000;
-			
+
 			int random = (int) (Math.floor(Math.random() * (max - min + 1)) + min);
-			
+
 			ss.setAttribute("usr", u);
 			ss.setAttribute("otp", String.valueOf(random));
 			emailService.sendSimpleEmail(u.getEmail(), "MÃ OTP", "MÃ OTP của bạn: " + random);
-			
+
 			return "account/otp";
 		}
-		
-		m.addAttribute("errorPass",true);
+
+		m.addAttribute("errorPass", true);
 		return "account/forgetPassword";
 	}
-	
-	
+
 	@PostMapping("/account/OTP")
-	public String GetOTP(Model m, 
-			@Param("numberOne") String numberOne, 
-			@Param("numberTwo") String numberTwo,
-			@Param("numberThree") String numberThree, 
-			@Param("numberFour") String numberFour) {
-		
+	public String GetOTP(Model m, @Param("numberOne") String numberOne, @Param("numberTwo") String numberTwo,
+			@Param("numberThree") String numberThree, @Param("numberFour") String numberFour) {
+
 		String otp = numberOne + numberTwo + numberThree + numberFour;
-		if(otp.equalsIgnoreCase(ss.getAttribute("otp"))) {
+		if (otp.equalsIgnoreCase(ss.getAttribute("otp"))) {
 			return "account/changePassword";
-		}else {
+		} else {
 			int min = 1000;
 			int max = 10000;
 
@@ -252,22 +259,21 @@ public class AccountController {
 			ss.setAttribute("otp", String.valueOf(random));
 			emailService.sendSimpleEmail(u.getEmail(), "MÃ OTP", "MÃ OTP của bạn: " + random);
 
-			m.addAttribute("errorPass",true);
+			m.addAttribute("errorPass", true);
 			return "account/otp";
 		}
-		
+
 	}
-	
+
 	@PostMapping("/account/changePassword")
-	public String setChangePassword(Model m,
-		 Users u) {
-		
+	public String setChangePassword(Model m, Users u) {
+
 		String passwordsnew = param.getString("passwords", "");
 		String passwordsnew2 = param.getString("passwordsTwo", "");
-		
+
 		Users uFind = ss.getAttribute("usr");
-		
-		if(passwordsnew2.equalsIgnoreCase(passwordsnew)) {
+
+		if (passwordsnew2.equalsIgnoreCase(passwordsnew)) {
 			u.setUsername(uFind.getUsername());
 			u.setFullname(uFind.getFullname());
 			u.setPasswords(uFind.getPasswords());
@@ -279,15 +285,15 @@ public class AccountController {
 			u.setBlocked(uFind.isBlocked());
 			u.setLogs(uFind.getLogs());
 			u.setUserRole(uFind.getUserRole());
-			
+
 			u.setPasswords(passwordsnew);
 			userService.update(u);
-			System.out.println("IF"+passwordsnew2);
-			m.addAttribute("successPass",true);
+			System.out.println("IF" + passwordsnew2);
+			m.addAttribute("successPass", true);
 			return "account/changePassword";
 		}
-		m.addAttribute("errorPass",true);
-		System.out.println("ELSE"+passwordsnew);
+		m.addAttribute("errorPass", true);
+		System.out.println("ELSE" + passwordsnew);
 		return "account/changePassword";
 	}
 }
