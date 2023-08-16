@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poly.service.EmailSenderService;
 import com.poly.service.ParamService;
 import com.poly.service.SessionService;
 import com.poly.service_bean.UsersService;
@@ -48,6 +49,9 @@ public class AccountController {
 	
 	@Autowired
 	UsersService accountService;
+	
+	@Autowired
+	EmailSenderService emailService;
 	
 	@Autowired
 	SessionService ss;
@@ -161,10 +165,10 @@ public class AccountController {
 		String passwordsnew2 = param.getString("passwordsNew2", "");
 		
 		if(!passwords.equalsIgnoreCase(user.getPasswords())) {
-			m.addAttribute("errorPass","Kiểm tra lại mật khẩu");
+			m.addAttribute("errorPass",true);
 		}
 		if(!passwordsnew.equalsIgnoreCase(passwordsnew2)) {
-			m.addAttribute("errorPass","Kiểm tra lại mật khẩu");
+			m.addAttribute("errorPass",true);
 		}
 		else {
 			u.setUsername(user.getUsername());
@@ -188,10 +192,102 @@ public class AccountController {
 		}
 		return "home/profile";
 	}
-	@CrossOrigin("*")
-	@ResponseBody
-	@RequestMapping("/rest/security/authentication")
-	public Object getAuthentication(HttpSession session) {
-		return session.getAttribute("authentication");
+	
+//	@CrossOrigin("*")
+//	@ResponseBody
+//	@RequestMapping("/rest/security/authentication")
+//	public Object getAuthentication(HttpSession session) {
+//		return session.getAttribute("authentication");
+//	}
+	
+	
+	
+	@RequestMapping("/account/forgetpassword")
+	public String getPassword() {
+		return "account/forgetPassword";
+	}
+	
+	@PostMapping("/account/forgetPassword")
+	public String PostPassword(Model m, @Param("username") String username) {
+		
+		Users u = userService.findById(username);
+		
+		
+		if(u != null) {
+			
+			int min = 1000;
+			int max = 10000;
+			
+			int random = (int) (Math.floor(Math.random() * (max - min + 1)) + min);
+			
+			ss.setAttribute("usr", u);
+			ss.setAttribute("otp", String.valueOf(random));
+			emailService.sendSimpleEmail(u.getEmail(), "MÃ OTP", "MÃ OTP của bạn: " + random);
+			
+			return "account/otp";
+		}
+		
+		m.addAttribute("errorPass",true);
+		return "account/forgetPassword";
+	}
+	
+	
+	@PostMapping("/account/OTP")
+	public String GetOTP(Model m, 
+			@Param("numberOne") String numberOne, 
+			@Param("numberTwo") String numberTwo,
+			@Param("numberThree") String numberThree, 
+			@Param("numberFour") String numberFour) {
+		
+		String otp = numberOne + numberTwo + numberThree + numberFour;
+		if(otp.equalsIgnoreCase(ss.getAttribute("otp"))) {
+			return "account/changePassword";
+		}else {
+			int min = 1000;
+			int max = 10000;
+
+			int random = (int) (Math.floor(Math.random() * (max - min + 1)) + min);
+
+			Users u = ss.getAttribute("usr");
+			ss.setAttribute("otp", String.valueOf(random));
+			emailService.sendSimpleEmail(u.getEmail(), "MÃ OTP", "MÃ OTP của bạn: " + random);
+
+			m.addAttribute("errorPass",true);
+			return "account/otp";
+		}
+		
+	}
+	
+	@PostMapping("/account/changePassword")
+	public String setChangePassword(Model m,
+		 Users u) {
+		
+		String passwordsnew = param.getString("passwords", "");
+		String passwordsnew2 = param.getString("passwordsTwo", "");
+		
+		Users uFind = ss.getAttribute("usr");
+		
+		if(passwordsnew2.equalsIgnoreCase(passwordsnew)) {
+			u.setUsername(uFind.getUsername());
+			u.setFullname(uFind.getFullname());
+			u.setPasswords(uFind.getPasswords());
+			u.setEmail(uFind.getEmail());
+			u.setPhone(uFind.getPhone());
+			u.setActive(uFind.isActive());
+			u.setCreatedate(uFind.getCreatedate());
+			u.setFailed_login_attempts(uFind.getFailed_login_attempts());
+			u.setBlocked(uFind.isBlocked());
+			u.setLogs(uFind.getLogs());
+			u.setUserRole(uFind.getUserRole());
+			
+			u.setPasswords(passwordsnew);
+			userService.update(u);
+			System.out.println("IF"+passwordsnew2);
+			m.addAttribute("successPass",true);
+			return "account/changePassword";
+		}
+		m.addAttribute("errorPass",true);
+		System.out.println("ELSE"+passwordsnew);
+		return "account/changePassword";
 	}
 }

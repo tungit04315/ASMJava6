@@ -32,6 +32,7 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Autowired
 	UsersDAO dao;
+	
 	@Autowired
 	UserRoleDAO userRoleDao;
 	
