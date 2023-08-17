@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title" style="color: blue; font-weight: 600;">1249</h5>
+                                        <h5 class="card-title" style="color: blue; font-weight: 600;">123</h5>
                                         <p class="card-text" style="color: gray;">Lượt xem</p>
                                     </div>
                                 </div>
@@ -80,7 +80,34 @@
                         </div>
                     </div>
                 </div>
-
+    <hr>           
+				<div class="filter">
+				<form action="/admin/statistic/filter">
+					<div class="row" style="margin: 5px">
+						<div class="col-2">
+							Từ ngày
+						</div>
+						<div class="col-7">
+							<input type="date" name="fromDate">
+						</div>
+						<div class="col-3">
+							<button class="btn btn-secondary" type="submit">Lọc ds</button>
+						</div>
+					</div>
+					<div class="row" style="margin: 5px">
+						<div class="col-2">
+							Đến ngày
+						</div>
+						<div class="col-7">
+							<input type="date" name="toDate">
+						</div>
+						<div class="col-3">
+							<a th:href="@{|/admin/index|}" class="btn btn-secondary" >Quay lại</a>
+						</div>
+					</div>
+					</form>
+				</div>
+    <hr>
                 <table class="table table-striped">
                     <thead>
                         <tr>
