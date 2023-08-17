@@ -142,6 +142,10 @@ public class ProductController {
 	
 	@RequestMapping("/product/delete/{id}")
 	public String delete(@PathVariable("id") Integer id) {
+		
+		Inventory inven = inventoryDao.findInventoryByIdProduct(id);
+		inventoryDao.delete(inven.getId());
+		
 		dao.delete(id);
 		return "redirect:/product/UpdateProduct";
 	}

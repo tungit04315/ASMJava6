@@ -47,6 +47,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
                     this.saveToLocalStorage();
                 })
             }
+
             swal("Thành Công!", "Đã thêm vào giỏ hàng!", "success");
         },
         remove(id) {
@@ -73,6 +74,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
             return this.items
                 .map(item => item.product_price * item.qty) // tinh tong cua 1 sp
                 .reduce((total, qty) => total += qty, 0);
+
         },
         saveToLocalStorage() {
             // luu gio hang vao local
@@ -83,10 +85,13 @@ app.controller("shopping-cart-ctrl", function($scope, $http, $rootScope) {
             // lay va doc du lieu tu local
             var json = localStorage.getItem("cart");
             this.items = json ? JSON.parse(json) : [];
+
         }
     }
 
     $scope.cart.loadFromLocalStorage();
+
+
 
     // QUAN LY DON HANG
     $scope.order = {

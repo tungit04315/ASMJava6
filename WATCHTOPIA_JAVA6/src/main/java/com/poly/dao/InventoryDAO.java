@@ -17,4 +17,6 @@ public interface InventoryDAO extends JpaRepository<Inventory, Integer>{
 	@Query(value="select * from inventory i where i.product_id = ?1", nativeQuery=true)
 	Inventory findObject(Integer id);
 	
+	@Query("SELECT p FROM Inventory p WHERE p.product.product_id=?1")
+	Inventory findObjectInventory(Integer id);
 }

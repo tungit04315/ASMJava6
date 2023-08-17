@@ -53,4 +53,10 @@ public class InventoryServiceImpl implements InventoryService{
 		dao.save(inv);
 	}
 
+	@Override
+	public Inventory findInventoryByIdProduct(Integer id) {
+		// TODO Auto-generated method stub
+		return dao.findObjectInventory(id);
+	}
+
 }

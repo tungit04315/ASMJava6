@@ -1,8 +1,13 @@
 package com.poly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +34,25 @@ public class HomeController {
 	
 	@RequestMapping({"/","/home/index"})
 	public String GetHome(Model m) {
-		m.addAttribute("items", productService.findAll());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		List<String> authList = new ArrayList<>();
+		// Check if the user is authenticated
+		if (authentication != null && authentication.isAuthenticated()) {
+			List<String> roleNames = usersService.getRolesByUsername(authentication.getName());
+
+			for (String roleName : roleNames) {
+				authList.add("ROLE_" + roleName);
+			}
+		}
+
+		if (authList.contains("ROLE_ADMIN")) {
+
+			return "redirect:/admin/index";
+		} else {
+			m.addAttribute("items", productService.findAll());
 		return "home/index";
+		}
+		
 	}
 	
 	@RequestMapping("/home/details/{id}")

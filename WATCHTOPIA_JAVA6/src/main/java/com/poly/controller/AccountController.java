@@ -189,21 +189,18 @@ public class AccountController {
 					u.setUserRole(user.getUserRole());
 
 					u.setPasswords(passwordsnew);
-//					user.setPasswords(passwordsnew);
+					user.setPasswords(passwordsnew);
 					userService.update(u);
 
 					m.addAttribute("u", u);
 					m.addAttribute("successPass", true);
 					return "home/profile";
-				} else {
-					return "home/profile";
-				}
-			} else {
-				m.addAttribute("errorPass", true);
-				m.addAttribute("u", userService.findById(user.getUsername()));
-				return "home/profile";
-			}
+				} 
+
+			} 
 		}
+		m.addAttribute("errorPass", true);
+		m.addAttribute("u", userService.findById(user.getUsername()));
 		return "home/profile";
 	}
 
@@ -214,12 +211,12 @@ public class AccountController {
 //		return session.getAttribute("authentication");
 //	}
 
-	@RequestMapping("/account/forgetpassword")
+	@GetMapping("/account/forgetpassword/form")
 	public String getPassword() {
 		return "account/forgetPassword";
 	}
 
-	@PostMapping("/account/forgetPassword")
+	@PostMapping("/account/forgetpassword/post")
 	public String PostPassword(Model m, @Param("username") String username) {
 
 		Users u = userService.findById(username);

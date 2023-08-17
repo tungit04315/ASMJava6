@@ -19,4 +19,6 @@ public interface InventoryService {
 	public Inventory findInvById(int vid);
 	
 	public void save(Inventory inv);
+	
+	public Inventory findInventoryByIdProduct(Integer id);
 }
