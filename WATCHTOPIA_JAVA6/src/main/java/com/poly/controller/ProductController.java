@@ -144,7 +144,7 @@ public class ProductController {
 	public String delete(@PathVariable("id") Integer id) {
 		
 		Inventory inven = inventoryDao.findInventoryByIdProduct(id);
-		inventoryDao.delete(inven.getId());
+		inventoryDao.delete(inven.getId());//
 		
 		dao.delete(id);
 		return "redirect:/product/UpdateProduct";
