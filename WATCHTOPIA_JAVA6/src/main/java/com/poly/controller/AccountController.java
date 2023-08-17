@@ -285,12 +285,12 @@ public class AccountController {
 
 			u.setPasswords(passwordsnew);
 			userService.update(u);
-			System.out.println("IF" + passwordsnew2);
+			
 			m.addAttribute("successPass", true);
 			return "account/changePassword";
 		}
 		m.addAttribute("errorPass", true);
-		System.out.println("ELSE" + passwordsnew);
+		
 		return "account/changePassword";
 	}
 }

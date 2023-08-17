@@ -16,6 +16,7 @@ import com.poly.bean.Status;
 import com.poly.dao.OrderDAO;
 import com.poly.dao.OrderDetailDAO;
 import com.poly.service_bean.OrderService;
+import com.poly.service_bean.StatusService;
 
 
 @Service
@@ -23,6 +24,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	OrderDAO dao;
 
+	@Autowired
+	StatusService sttDao;
+	
 	@Autowired
 	OrderDetailDAO ddao;
 	
@@ -69,11 +73,13 @@ public class OrderServiceImpl implements OrderService {
 			Status stt = new Status();
 			stt.setStatus_id(2);
 			stt.setStatus_name("Đang giao");
+//			Status stt = sttDao.findByID(id+1);
 			ord.setStatus(stt);
 		}else if(ord.getStatus().getStatus_id()==2) {
 			Status stt = new Status();
 			stt.setStatus_id(3);
 			stt.setStatus_name("Đã nhận hàng");
+//			Status stt = sttDao.findByID(id+1);
 			ord.setStatus(stt);
 		}else if(ord.getStatus().getStatus_id()==3) {
 			

@@ -56,6 +56,8 @@ public class ProductController {
 		return "manager/addProduct";
 	}
 	
+	//C:\Users\tungt\git\repository\WATCHTOPIA_JAVA6\src\main\resources\static\img
+	
 	
 	@PostMapping("/product/addproduct")
 	public String SetAddProduct(Model m, @ModelAttribute Products p) {

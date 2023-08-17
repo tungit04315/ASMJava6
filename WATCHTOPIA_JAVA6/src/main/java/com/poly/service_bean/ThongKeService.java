@@ -6,5 +6,6 @@ import com.poly.bean.ThongKe;
 
 public interface ThongKeService {
 	public List<ThongKe> getListTK();
+	public List<ThongKe> getListFilter(String from, String to);
 	public Long getLuotMua();
 }

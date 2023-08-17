@@ -1,8 +1,10 @@
 package com.poly.dao;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.poly.bean.ThongKe;
 
@@ -23,7 +25,11 @@ public interface ThongKeDAO  extends JpaRepository<ThongKe, String>{
 			+ "group by p.product_name, p.product_price")
 	List<ThongKe> getListTK();
 	
-	@Query("select count(o) from Order o where o.status.status_id = 3")
+//	@Query("select count(o) from Order o where o.status.status_id = 3")
+	@Query("select new ThongKe(p.product_name, p.product_price, sum(d.quantity)) from OrderDetail d inner join Products p on d.product.product_id = p.product_id inner join Order o on o.orders_id = d.order.orders_id where o.orders_time between :fromDate and :toDate and o.status.status_id = 3 group by p.product_name, p.product_price")
+	List<ThongKe> getListFilter(@Param("fromDate") Date fromDate, @Param("toDate") Date toDate);
+	
+	@Query("select count(o) from Order o")
 	Long getLuotMua();
 	
 	
